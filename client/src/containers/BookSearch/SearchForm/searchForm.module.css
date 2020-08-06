@@ -1,0 +1,59 @@
+.SearchContainer {
+  position: relative;
+  width: 30%;
+  min-width: 250px;
+}
+
+.Input {
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  margin: 0;
+  outline: 0;
+  line-height: 1.21428571em;
+  padding: 0.67857143em 1em;
+  font-size: 1em;
+  background: #fff;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  color: rgba(0, 0, 0, 0.87);
+  border-radius: 0.28571429rem;
+  box-shadow: 0 0 0 0 transparent inset;
+  transition: color 0.1s ease, border-color 0.1s ease;
+  width: 100%;
+}
+
+.Input:focus {
+  outline: none !important;
+  border-color: #cce2ff;
+  box-shadow: 0 0 10px #cce2ff;
+}
+
+.Icon {
+  border-radius: 500em !important;
+  line-height: 1 !important;
+  padding: 0.5em 0.5em !important;
+  box-shadow: 0 0 0 0.1em rgba(0, 0, 0, 0.1) inset;
+  width: 2.5em !important;
+  height: 2.5em !important;
+  display: inline-block;
+  position: absolute;
+  top: 0.3rem;
+  right: 0.5rem;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  background-image: url("../../../assets/images/icons8-search.svg");
+  background-size: 100%;
+}
+
+.Icon:hover {
+  opacity: 1;
+  background-image: url("../../../assets/images/icons8-search-red.svg");
+}
+
+.Icon:active {
+  outline: 0;
+  transform: translateY(1px);
+}
+
+.Icon:focus {
+  outline: 0;
+}

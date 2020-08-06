@@ -1,0 +1,32 @@
+html {
+    overflow:   scroll;
+  }
+  ::-webkit-scrollbar {
+      width: 1px;
+      opacity: 0;
+      background: transparent; /* make scrollbar transparent */
+  }
+
+.Modal {
+    position: fixed;
+    z-index: 500;
+    background-color: white;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 1px black;
+    padding: 16px;
+    left: 15%;
+    top: 20%;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+    height: 70%;
+    overflow: scroll;
+}
+
+@media (min-width: 600px) {
+    .Modal {
+        width: 500px;
+        left: calc(50% - 250px);
+    }
+}

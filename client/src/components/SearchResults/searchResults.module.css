@@ -1,0 +1,91 @@
+/* Font */
+@import url("https://fonts.googleapis.com/css?family=Quicksand:400,700");
+
+body {
+  color: #272727;
+  font-family: "Quicksand", serif;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  padding: 1rem;
+}
+
+.main {
+  background: #fff;
+  /* box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15); */
+  margin: 1rem 0;
+  padding: 1em 1em;
+  border-radius: 0.28571429rem;
+  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+h1 {
+  font-size: 40px !important;
+}
+
+.BookImage {
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.OutOfStock {
+  width: 40px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cards_item {
+  display: flex;
+  padding: 1rem;
+}
+
+@media (min-width: 40rem) {
+  .cards_item {
+    width: 50%;
+  }
+}
+
+@media (min-width: 56rem) {
+  .cards_item {
+    width: 33.3333%;
+  }
+}
+
+.card {
+  background-color: transparent;
+  border-radius: 0.25rem;
+  /* box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25); */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  display: block;
+}
+
+.card_content {
+  padding: 1rem;
+}
+
+.card_title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0px;
+}
+
+.card_text {
+  color: #ffffff;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  font-weight: 400;
+}

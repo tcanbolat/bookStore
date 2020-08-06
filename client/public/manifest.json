@@ -1,0 +1,25 @@
+{
+  "short_name": "react book store",
+  "name": "book store mimmick using react",
+  "icons": [
+    {
+      "src": "icon66x50.ico",
+      "sizes": "66x50",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo144x144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "logo420x316.png",
+      "type": "image/png",
+      "sizes": "420x316"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
