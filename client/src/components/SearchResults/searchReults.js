@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import classes from "./searchResults.module.css";
 import PlaceHolder from "../UI/PlaceHolder/placeHolder";
@@ -8,7 +8,6 @@ import Spinner from "../UI/Spinner/Spinner";
 const searchResults = (props) => {
   let books = props.bookResults;
   let bookCard = [];
-  let totalResults = null;
   console.log(books);
 
   if (books === 0) {
@@ -35,7 +34,7 @@ const searchResults = (props) => {
               <h2>
                 out of stock
                 {/* {book.saleInfo.saleability.replace(/_/g, " ").toLowerCase()} */}
-                <img className={classes.OutOfStock} src={OutOfStock} />
+                <img alt="out-of-stock" className={classes.OutOfStock} src={OutOfStock} />
               </h2>
             </div>
           )}
@@ -43,7 +42,6 @@ const searchResults = (props) => {
         </div>
       </div>
     ));
-    totalResults = <h1>total results: {books.length}</h1>;
   } else {
     bookCard = <PlaceHolder message={"Search for a book!"} />;
   }
@@ -55,7 +53,6 @@ const searchResults = (props) => {
   return (
     <div className={classes.main}>
       <button onClick={props.toggleBy}>Orderby</button>
-      {props.loading ? null : totalResults}
       <div className={classes.cards}>{bookCard}</div>
     </div>
   );

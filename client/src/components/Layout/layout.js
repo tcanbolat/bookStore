@@ -19,11 +19,11 @@ const Layout = (props) => {
   };
 
   return (
-    <div>
+    <Aux>
       <Toolbar drawerToggleClicked={sideDrawerToggleHandler} />
       <SideDrawer open={toggleSideDrawer} closed={sideDrawerClosedHandler} />
       <main className={classes.Content}>{props.children}</main>
-    </div>
+    </Aux>
   );
 };
 

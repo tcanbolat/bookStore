@@ -6,13 +6,15 @@ import SearchForm from "./SearchForm/SearchForm";
 import SearchResults from "../../components/SearchResults/searchReults";
 import Modal from "../../components/UI/Modal/modal";
 import BookDetails from "../../components/BookDetails/bookDetails";
-import searchResults from "../../components/SearchResults/searchReults";
+import Pagination from "../../components/Pagination/Pagination";
 
 const BookSearch = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [modal, setModal] = useState(false);
   const [clickedBook, setClickedBook] = useState({});
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(20);
 
   let booksDetails = null;
 
@@ -47,10 +49,20 @@ const BookSearch = () => {
   };
 
   const bookOrderToggle = () => {
-    const sorted = [...searchResult].sort((a, b) => (a.saleInfo.saleability > b.saleInfo.saleability) ? 1 : -1);
+    const sorted = [...searchResult].sort((a, b) =>
+      a.saleInfo.saleability > b.saleInfo.saleability ? 1 : -1
+    );
     setSearchResult(sorted);
-    console.log(sorted)
-  }
+    console.log(sorted);
+  };
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = searchResult.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (modal) {
     booksDetails = (
@@ -72,11 +84,16 @@ const BookSearch = () => {
         {booksDetails}
       </Modal>
       <SearchForm submitForm={handleFormSubmit} />
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={searchResult.length}
+        paginate={paginate}
+      />
       <SearchResults
-      toggleBy={bookOrderToggle}
+        toggleBy={bookOrderToggle}
         loading={loading}
         toggleModal={handleBookModal}
-        bookResults={searchResult}
+        bookResults={currentPosts}
       />
     </div>
   );
