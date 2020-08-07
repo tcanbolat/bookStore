@@ -2,20 +2,20 @@ import React, { useState } from "react";
 
 import classes from "./searchForm.module.css";
 
-const SearchForm = (props) => {
+const SearchForm = ({results, submitForm}) => {
   const [input, setInput] = useState("");
 
   const submitHandler = (event) => {
     event.preventDefault();
     console.log(input);
-    props.submitForm(input);
+    submitForm(input);
     setInput("");
   };
 
   console.log("SEARCHFORM>JS : RENDERING...");
 
   return (
-    <div className={classes.SearchContainer}>
+    <div className={[classes.SearchContainer, ]}>
       <form onSubmit={submitHandler}>
         <input
         className={classes.Input}

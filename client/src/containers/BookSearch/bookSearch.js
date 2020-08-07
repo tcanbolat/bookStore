@@ -56,7 +56,6 @@ const BookSearch = () => {
     );
     setSearchResult(sorted);
     setCurrentPage(1);
-    console.log(sorted);
   };
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -74,6 +73,7 @@ const BookSearch = () => {
   if (modal) {
     booksDetails = (
       <BookDetails
+        image={clickedBook.volumeInfo.imageLinks.thumbnail}
         title={clickedBook.volumeInfo.title}
         subtitle={clickedBook.volumeInfo.subtitle}
         description={clickedBook.volumeInfo.description}
@@ -91,26 +91,28 @@ const BookSearch = () => {
         {booksDetails}
       </Modal>
       <SearchForm submitForm={handleFormSubmit} />
-      <Pagination
-        loading={loading}
-        postsPerPage={postsPerPage}
-        totalPosts={searchResult.length}
-        currentPage={currentPage}
-        paginate={paginate}
-      />
-      <SearchResults
-        toggleBy={bookOrderToggle}
-        loading={loading}
-        toggleModal={handleBookModal}
-        bookResults={slicedResults}
-      />
-      <Pagination
-        loading={loading}
-        postsPerPage={postsPerPage}
-        totalPosts={searchResult.length}
-        currentPage={currentPage}
-        paginate={paginate}
-      />
+      <div>
+        <Pagination
+          loading={loading}
+          postsPerPage={postsPerPage}
+          totalPosts={searchResult.length}
+          currentPage={currentPage}
+          paginate={paginate}
+        />
+        <SearchResults
+          toggleBy={bookOrderToggle}
+          loading={loading}
+          toggleModal={handleBookModal}
+          bookResults={slicedResults}
+        />
+        <Pagination
+          loading={loading}
+          postsPerPage={postsPerPage}
+          totalPosts={searchResult.length}
+          currentPage={currentPage}
+          paginate={paginate}
+        />
+      </div>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import classes from "./placeHolder.module.css";
 const placeHodler = (props) => {
   return (
     <div className={classes.Container}>
-      <h1>{props.message}</h1>
+      <h3>{props.message}</h3>
     </div>
   );
 };

@@ -1,0 +1,11 @@
+.TopRow {
+  display: flex;
+}
+
+img {
+  padding-right: 1.5rem;
+}
+
+.Details {
+    width: fit-content;
+}
