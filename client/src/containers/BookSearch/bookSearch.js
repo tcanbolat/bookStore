@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import classes from "./bookSearch.module.css";
 import API from "../../utils/API";
@@ -16,6 +16,7 @@ const BookSearch = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(20);
 
+  let slicedResults = null;
   let booksDetails = null;
 
   const handleFormSubmit = (value) => {
@@ -25,6 +26,7 @@ const BookSearch = () => {
         console.log(res.data);
         setSearchResult(res.data);
         setLoading(false);
+        setCurrentPage(1);
       })
       .catch((error) => {
         console.log(error);
@@ -53,15 +55,20 @@ const BookSearch = () => {
       a.saleInfo.saleability > b.saleInfo.saleability ? 1 : -1
     );
     setSearchResult(sorted);
+    setCurrentPage(1);
     console.log(sorted);
   };
 
-  // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = searchResult.slice(indexOfFirstPost, indexOfLastPost);
+  if (searchResult === 0) {
+    slicedResults = 0;
+  } else {
+    slicedResults = searchResult.slice(indexOfFirstPost, indexOfLastPost);
+  }
 
-  // Change page
+  useEffect(() => {}, [setCurrentPage]);
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (modal) {
@@ -85,15 +92,24 @@ const BookSearch = () => {
       </Modal>
       <SearchForm submitForm={handleFormSubmit} />
       <Pagination
+        loading={loading}
         postsPerPage={postsPerPage}
         totalPosts={searchResult.length}
+        currentPage={currentPage}
         paginate={paginate}
       />
       <SearchResults
         toggleBy={bookOrderToggle}
         loading={loading}
         toggleModal={handleBookModal}
-        bookResults={currentPosts}
+        bookResults={slicedResults}
+      />
+      <Pagination
+        loading={loading}
+        postsPerPage={postsPerPage}
+        totalPosts={searchResult.length}
+        currentPage={currentPage}
+        paginate={paginate}
       />
     </div>
   );
