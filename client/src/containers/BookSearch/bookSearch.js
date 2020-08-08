@@ -76,22 +76,14 @@ const BookSearch = () => {
 
   const addToCartHandler = () => {
     alert("ADDED TO CART!!!");
-  }
+  };
 
   if (modal) {
     booksDetails = (
       <BookDetails
+        bookDetails={clickedBook}
         toggle={moddleToggleHandler}
         addToCart={addToCartHandler}
-        available={clickedBook.saleInfo.saleability}
-        image={clickedBook.volumeInfo.imageLinks.thumbnail}
-        title={clickedBook.volumeInfo.title}
-        subtitle={clickedBook.volumeInfo.subtitle}
-        description={clickedBook.volumeInfo.description}
-        authors={clickedBook.volumeInfo.authors}
-        pageCount={clickedBook.volumeInfo.pageCount}
-        previewLink={clickedBook.volumeInfo.previewLink}
-        publishedDate={clickedBook.volumeInfo.publishedDate.slice(0, 4)}
       />
     );
   }

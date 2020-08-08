@@ -22,8 +22,8 @@
 
 .Input:focus {
   outline: none !important;
-  border-color: #cce2ff;
-  box-shadow: 0 0 10px #cce2ff;
+  border-color: #2f9fe0;
+  box-shadow: 0 0 10px #8e9aac;
 }
 
 .Icon {

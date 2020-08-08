@@ -3,20 +3,36 @@ import React from "react";
 import Aux from "../../hoc/Auxillary/Auxillary";
 import classes from "./bookDetails.module.css";
 import Button from "../UI/Button/Button";
+import Rater from "../UI/Rater/Rater";
 
 const bookDetails = (props) => {
+  const { bookDetails } = props;
+  console.log(bookDetails);
   return (
     <Aux>
       <div className={classes.TopRow}>
-        <img alt="book cover" src={props.image} />
+        <img
+          alt="book cover"
+          src={bookDetails.volumeInfo.imageLinks.thumbnail}
+        />
         <div className={classes.Details}>
-          <h3>{props.title}</h3>
+          <h3>{bookDetails.volumeInfo.title}</h3>
+          <p style={{ fontStyle: "italic", fontSize: "15px"}}>
+            {bookDetails.volumeInfo.authors.length > 1
+              ? bookDetails.volumeInfo.authors.join(" & ")
+              : bookDetails.volumeInfo.authors}
+          </p>
           <h3>
-            Pages: {props.pageCount === undefined ? "NA" : +props.pageCount}
+            {bookDetails.volumeInfo.pageCount === undefined
+              ? "NA"
+              : "Pages: " + bookDetails.volumeInfo.pageCount}
           </h3>
-          <h3>Published: {props.publishedDate}</h3>
-          {props.available === "FOR_SALE" ? (
-            <Button btnType="Success" clicked={props.addToCart}>add to cart</Button>
+          <h3>Published: {bookDetails.volumeInfo.publishedDate.slice(0, 4)}</h3>
+          <Rater rating={bookDetails.volumeInfo.averageRating} />
+          {bookDetails.saleInfo.saleability === "FOR_SALE" ? (
+            <Button btnType="Success" clicked={props.addToCart}>
+              add to cart
+            </Button>
           ) : (
             <Button disabled btnType="Danger">
               Out of Stock
@@ -28,10 +44,7 @@ const bookDetails = (props) => {
         </div>
       </div>
       <div className={classes.Description}>
-        <p>{props.description}</p>
-        <a href={props.previewLink} target="_blank" rel="noopener noreferrer">
-          more info...
-        </a>
+        <p>{bookDetails.volumeInfo.description}</p>
       </div>
     </Aux>
   );
