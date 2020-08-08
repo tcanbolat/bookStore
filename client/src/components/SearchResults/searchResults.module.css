@@ -24,6 +24,11 @@ body {
 
 h1 {
   font-size: 40px !important;
+  margin-bottom: 0px;
+}
+
+h2 {
+  margin-bottom: 0px;
 }
 
 .BookImage {
@@ -32,8 +37,25 @@ h1 {
   vertical-align: middle;
 }
 
-.OutOfStock {
+.BookImage:hover {
+cursor: pointer;
+}
+
+.Cart {
   width: 40px;
+}
+
+.Cart:hover {
+  width: 50px;
+  cursor: pointer;
+}
+
+.NotAvail {
+  width: 30px;
+}
+
+.Price {
+  display: flex;
 }
 
 .cards {
@@ -82,10 +104,4 @@ h1 {
   margin: 0px;
 }
 
-.card_text {
-  color: #ffffff;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  margin-bottom: 1.25rem;
-  font-weight: 400;
-}
+

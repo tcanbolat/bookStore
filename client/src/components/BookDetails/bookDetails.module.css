@@ -2,10 +2,21 @@
   display: flex;
 }
 
-img {
+.TopRow img {
   padding-right: 1.5rem;
 }
 
 .Details {
     width: fit-content;
+}
+
+.Description {
+  border: 1px solid grey;
+  margin-top: 10px;
+  padding: 1rem;
+  box-shadow: 0px 0px 5px #555 inset;
+}
+
+.Description p {
+  margin-top: 0px;
 }

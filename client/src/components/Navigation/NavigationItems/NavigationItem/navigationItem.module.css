@@ -4,6 +4,7 @@
   box-sizing: border-box;
   display: block;
   width: 100%;
+  border: 1px solid red;
 }
 
 .NavigationItem a {
@@ -25,16 +26,17 @@
   .NavigationItem {
     margin: 0;
     display: flex;
-    height: 100%;
+    margin-right: 8px;;
     width: auto;
     align-items: center;
+    border-radius: 0.3rem;
   }
 
   .NavigationItem a {
     height: 100%;
     padding: 16px 10px;
     border-bottom: 4px solid transparent;
-    color: white;
+    color: black;
   }
 
   .NavigationItem a:hover,

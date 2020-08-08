@@ -70,9 +70,20 @@ const BookSearch = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const moddleToggleHandler = () => {
+    setModal(!modal);
+  };
+
+  const addToCartHandler = () => {
+    alert("ADDED TO CART!!!");
+  }
+
   if (modal) {
     booksDetails = (
       <BookDetails
+        toggle={moddleToggleHandler}
+        addToCart={addToCartHandler}
+        available={clickedBook.saleInfo.saleability}
         image={clickedBook.volumeInfo.imageLinks.thumbnail}
         title={clickedBook.volumeInfo.title}
         subtitle={clickedBook.volumeInfo.subtitle}
@@ -80,7 +91,7 @@ const BookSearch = () => {
         authors={clickedBook.volumeInfo.authors}
         pageCount={clickedBook.volumeInfo.pageCount}
         previewLink={clickedBook.volumeInfo.previewLink}
-        publishedDate={clickedBook.volumeInfo.publishedDate}
+        publishedDate={clickedBook.volumeInfo.publishedDate.slice(0, 4)}
       />
     );
   }
@@ -91,28 +102,27 @@ const BookSearch = () => {
         {booksDetails}
       </Modal>
       <SearchForm submitForm={handleFormSubmit} />
-      <div>
-        <Pagination
-          loading={loading}
-          postsPerPage={postsPerPage}
-          totalPosts={searchResult.length}
-          currentPage={currentPage}
-          paginate={paginate}
-        />
-        <SearchResults
-          toggleBy={bookOrderToggle}
-          loading={loading}
-          toggleModal={handleBookModal}
-          bookResults={slicedResults}
-        />
-        <Pagination
-          loading={loading}
-          postsPerPage={postsPerPage}
-          totalPosts={searchResult.length}
-          currentPage={currentPage}
-          paginate={paginate}
-        />
-      </div>
+      <Pagination
+        loading={loading}
+        postsPerPage={postsPerPage}
+        totalPosts={searchResult.length}
+        currentPage={currentPage}
+        paginate={paginate}
+      />
+      <SearchResults
+        addToCart={addToCartHandler}
+        toggleBy={bookOrderToggle}
+        loading={loading}
+        toggleModal={handleBookModal}
+        bookResults={slicedResults}
+      />
+      <Pagination
+        loading={loading}
+        postsPerPage={postsPerPage}
+        totalPosts={searchResult.length}
+        currentPage={currentPage}
+        paginate={paginate}
+      />
     </div>
   );
 };

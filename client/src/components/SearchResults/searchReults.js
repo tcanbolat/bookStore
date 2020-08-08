@@ -3,6 +3,7 @@ import React from "react";
 import classes from "./searchResults.module.css";
 import PlaceHolder from "../UI/PlaceHolder/placeHolder";
 import OutOfStock from "../../assets/images/outOfStock.svg";
+import ShoppingCart from "../../assets/images/shoppingCart.svg";
 import Spinner from "../UI/Spinner/Spinner";
 
 const searchResults = (props) => {
@@ -24,18 +25,26 @@ const searchResults = (props) => {
               className={classes.BookImage}
             />
           </div>
-
           {book.saleInfo.listPrice ? (
-            <h1 className={classes.card_title}>
-              ${book.saleInfo.listPrice.amount}{" "}
-            </h1>
+            <div className={classes.Price}>
+              <h1 className={classes.card_title}>
+                ${book.saleInfo.listPrice.amount}
+              </h1>
+              <img
+              onClick={props.addToCart}
+                className={classes.Cart}
+                alt="shopping cart"
+                src={ShoppingCart}
+              />
+            </div>
           ) : (
-            <div>
-              <h2>
-                out of stock
-                {/* {book.saleInfo.saleability.replace(/_/g, " ").toLowerCase()} */}
-                <img alt="out-of-stock" className={classes.OutOfStock} src={OutOfStock} />
-              </h2>
+            <div className={classes.Price}>
+              <h2>out of stock</h2>
+              <img
+                alt="out-of-stock"
+                className={classes.NotAvail}
+                src={OutOfStock}
+              />
             </div>
           )}
           <h2 className={classes.card_title}>{book.volumeInfo.title}</h2>
@@ -47,7 +56,7 @@ const searchResults = (props) => {
   }
 
   if (props.loading) {
-    bookCard = <Spinner />
+    bookCard = <Spinner />;
   }
 
   return (
