@@ -8,7 +8,7 @@ const bookDetails = (props) => {
   return (
     <Aux>
       <div className={classes.TopRow}>
-        <img src={props.image} />
+        <img alt="book cover" src={props.image} />
         <div className={classes.Details}>
           <h3>{props.title}</h3>
           <h3>
