@@ -25,6 +25,7 @@ const BookSearch = () => {
     setLoading(true);
     API.getBooks(value)
       .then((res) => {
+        setFiltered([]);
         setSearchResult(res.data);
         setLoading(false);
         setCurrentPage(1);
@@ -68,7 +69,7 @@ const BookSearch = () => {
         );
         break;
       default:
-        console.log(e);
+        return null;
     }
     setCurrentPage(1);
   };
@@ -112,7 +113,7 @@ const BookSearch = () => {
       </Modal>
       <div className={classes.SearchArea}>
         <SearchForm submitForm={handleFormSubmit} />
-        <Filters filterBy={(e) => bookFilterHandler(e)} />
+        <Filters loading={loading} filterBy={(e) => bookFilterHandler(e)} />
       </div>
       <Pagination
         loading={loading}

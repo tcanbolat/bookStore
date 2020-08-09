@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 
 import classes from "./filters.module.css";
 
-const Filters = (props) => {
+const Filters = ({ filterBy, loading }) => {
   const [selectedInput, setSetlectedInput] = useState("all");
 
   useEffect(() => {
-    props.filterBy(selectedInput);
-  }, [selectedInput]);
+    if (loading) {
+      setSetlectedInput("all");
+    }
+    filterBy(selectedInput);
+  }, [selectedInput, loading]);
 
   const setFilterHandler = (e) => {
     const filterName = e.target.value;
