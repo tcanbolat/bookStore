@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import classes from "./searchForm.module.css";
 
-const SearchForm = ({results, submitForm}) => {
+const SearchForm = ({submitForm}) => {
   const [input, setInput] = useState("");
 
   const submitHandler = (event) => {

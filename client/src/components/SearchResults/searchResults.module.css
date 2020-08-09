@@ -25,8 +25,9 @@ h1 {
   margin-bottom: 0px;
 }
 
-h2 {
+.Price h2 {
   margin-bottom: 0px;
+  opacity: 55%;
 }
 
 .BookImage {

@@ -17,7 +17,7 @@ const Pagination = ({
 
   return (
     <nav>
-      {totalPosts === 0 ? null : <p>{"Total Results: " + totalPosts}</p>}
+      {totalPosts === 0 || loading ? null : <p>{"Total Results: " + totalPosts}</p>}
       {loading ? null : (
         <ul className={classes.Pagination}>
           {pageNumbers.map((number) => (

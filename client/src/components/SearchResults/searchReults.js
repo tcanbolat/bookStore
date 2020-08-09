@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import classes from "./searchResults.module.css";
 import PlaceHolder from "../UI/PlaceHolder/placeHolder";
@@ -9,7 +9,6 @@ import Spinner from "../UI/Spinner/Spinner";
 const searchResults = (props) => {
   let books = props.bookResults;
   let bookCard = [];
-  console.log(books);
 
   if (books === 0) {
     bookCard = <PlaceHolder message={"No results, please try again"} />;
@@ -61,7 +60,6 @@ const searchResults = (props) => {
 
   return (
     <div className={classes.main}>
-      <button onClick={props.toggleBy}>Orderby</button>
       <div className={classes.cards}>{bookCard}</div>
     </div>
   );

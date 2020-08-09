@@ -1,0 +1,47 @@
+import React, { useState, useEffect } from "react";
+
+import classes from "./filters.module.css";
+
+const Filters = (props) => {
+  const [selectedInput, setSetlectedInput] = useState("all");
+
+  useEffect(() => {
+    props.filterBy(selectedInput);
+  }, [selectedInput]);
+
+  const setFilterHandler = (e) => {
+    const filterName = e.target.value;
+    setSetlectedInput(filterName);
+  };
+
+  return (
+    <div className={classes.Container}>
+      <h3>Filter</h3>
+      <form>
+        <input
+          onChange={(e) => setFilterHandler(e)}
+          checked={selectedInput === "available"}
+          type="radio"
+          value="available"
+        />
+        <label>availabe</label>
+        <input
+          type="radio"
+          value="na"
+          onChange={(e) => setFilterHandler(e)}
+          checked={selectedInput === "na"}
+        />
+        <label>not availabe</label>
+        <input
+          type="radio"
+          value="all"
+          onChange={(e) => setFilterHandler(e)}
+          checked={selectedInput === "all"}
+        />
+        <label>show all</label>
+      </form>
+    </div>
+  );
+};
+
+export default Filters;

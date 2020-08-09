@@ -7,6 +7,7 @@ import SearchResults from "../../components/SearchResults/searchReults";
 import Modal from "../../components/UI/Modal/modal";
 import BookDetails from "../../components/BookDetails/bookDetails";
 import Pagination from "../../components/Pagination/Pagination";
+import Filters from "./Filters/Filters";
 
 const BookSearch = () => {
   const [searchResult, setSearchResult] = useState([]);
@@ -15,6 +16,7 @@ const BookSearch = () => {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(20);
+  const [filtered, setFiltered] = useState([]);
 
   let slicedResults = null;
   let booksDetails = null;
@@ -23,7 +25,6 @@ const BookSearch = () => {
     setLoading(true);
     API.getBooks(value)
       .then((res) => {
-        console.log(res.data);
         setSearchResult(res.data);
         setLoading(false);
         setCurrentPage(1);
@@ -50,11 +51,25 @@ const BookSearch = () => {
     setModal(!modal);
   };
 
-  const bookOrderToggle = () => {
-    const sorted = [...searchResult].sort((a, b) =>
-      a.saleInfo.saleability > b.saleInfo.saleability ? 1 : -1
-    );
-    setSearchResult(sorted);
+  const bookFilterHandler = (e) => {
+    const results = [...searchResult];
+    switch (e) {
+      case "all":
+        setFiltered(results);
+        break;
+      case "available":
+        setFiltered(
+          results.filter((book) => book.saleInfo.saleability !== "NOT_FOR_SALE")
+        );
+        break;
+      case "na":
+        setFiltered(
+          results.filter((book) => book.saleInfo.saleability !== "FOR_SALE")
+        );
+        break;
+      default:
+        console.log(e);
+    }
     setCurrentPage(1);
   };
 
@@ -62,11 +77,13 @@ const BookSearch = () => {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   if (searchResult === 0) {
     slicedResults = 0;
+  } else if (filtered.length <= 0) {
+    const results = searchResult;
+    slicedResults = results.slice(indexOfFirstPost, indexOfLastPost);
   } else {
-    slicedResults = searchResult.slice(indexOfFirstPost, indexOfLastPost);
+    const results = filtered;
+    slicedResults = results.slice(indexOfFirstPost, indexOfLastPost);
   }
-
-  useEffect(() => {}, [setCurrentPage]);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -93,17 +110,19 @@ const BookSearch = () => {
       <Modal clicked={toggleHandler} show={modal}>
         {booksDetails}
       </Modal>
-      <SearchForm submitForm={handleFormSubmit} />
+      <div className={classes.SearchArea}>
+        <SearchForm submitForm={handleFormSubmit} />
+        <Filters filterBy={(e) => bookFilterHandler(e)} />
+      </div>
       <Pagination
         loading={loading}
         postsPerPage={postsPerPage}
-        totalPosts={searchResult.length}
+        totalPosts={filtered.length > 0 ? filtered.length : searchResult.length}
         currentPage={currentPage}
         paginate={paginate}
       />
       <SearchResults
         addToCart={addToCartHandler}
-        toggleBy={bookOrderToggle}
         loading={loading}
         toggleModal={handleBookModal}
         bookResults={slicedResults}

@@ -7,7 +7,6 @@ import Rater from "../UI/Rater/Rater";
 
 const bookDetails = (props) => {
   const { bookDetails } = props;
-  console.log(bookDetails);
   return (
     <Aux>
       <div className={classes.TopRow}>
@@ -17,17 +16,23 @@ const bookDetails = (props) => {
         />
         <div className={classes.Details}>
           <h3>{bookDetails.volumeInfo.title}</h3>
-          <p style={{ fontStyle: "italic", fontSize: "15px"}}>
+          <p style={{ fontStyle: "italic", fontSize: "15px" }}>
             {bookDetails.volumeInfo.authors.length > 1
               ? bookDetails.volumeInfo.authors.join(" & ")
               : bookDetails.volumeInfo.authors}
           </p>
           <h3>
+            Pages:
             {bookDetails.volumeInfo.pageCount === undefined
-              ? "NA"
-              : "Pages: " + bookDetails.volumeInfo.pageCount}
+              ? " NA"
+              : " " + bookDetails.volumeInfo.pageCount}
           </h3>
-          <h3>Published: {bookDetails.volumeInfo.publishedDate.slice(0, 4)}</h3>
+          <h3>
+            Published:
+            {bookDetails.volumeInfo.publishedDate === undefined
+              ? " NA"
+              : bookDetails.volumeInfo.publishedDate.slice(0, 4)}
+          </h3>
           <Rater rating={bookDetails.volumeInfo.averageRating} />
           {bookDetails.saleInfo.saleability === "FOR_SALE" ? (
             <Button btnType="Success" clicked={props.addToCart}>

@@ -1,9 +1,11 @@
 .TopRow {
   display: flex;
+  align-items: flex-start;
 }
 
 .TopRow img {
   padding-right: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .Details {
