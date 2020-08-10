@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import classes from "./bookSearch.module.css";
 import API from "../../utils/API";
@@ -18,23 +18,33 @@ const BookSearch = () => {
   const [postsPerPage] = useState(20);
   const [filtered, setFiltered] = useState([]);
 
-  let slicedResults = null;
-  let booksDetails = null;
-
   const handleFormSubmit = (value) => {
     setLoading(true);
-    API.getBooks(value)
+    API.searchForBooks(value)
       .then((res) => {
-        setFiltered([]);
+        console.log(res.data);
         setSearchResult(res.data);
         setLoading(false);
-        setCurrentPage(1);
+        setCurrentPage(1); // ressetting the pagination back to the first page on every new search.
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
       });
   };
+
+  // setting up and slicing out a page from the results
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  let slicedPage = 0;
+  if (filtered.length <= 0 && searchResult.length <= 0) {  // checking for results to slice or not. 
+    slicedPage = searchResult.slice(indexOfFirstPost, indexOfLastPost);
+  } 
+  if(filtered.length > 0) {  // checking whether to slice based on any filters or not.
+    slicedPage = filtered.slice(indexOfFirstPost, indexOfLastPost);
+  }
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleBookModal = (id) => {
     const bookIndex = searchResult.findIndex((b) => {
@@ -48,47 +58,33 @@ const BookSearch = () => {
     setClickedBook(book);
   };
 
-  const toggleHandler = () => {
-    setModal(!modal);
-  };
-
-  const bookFilterHandler = (e) => {
-    const results = [...searchResult];
-    switch (e) {
+  const bookFilterHandler = useCallback((filterValue) => {
+    const filteredBook = searchResult;
+    switch (filterValue) {
       case "all":
-        setFiltered(results);
+        setFiltered(filteredBook);
         break;
       case "available":
         setFiltered(
-          results.filter((book) => book.saleInfo.saleability !== "NOT_FOR_SALE")
+          filteredBook.filter(
+            (book) => book.saleInfo.saleability !== "NOT_FOR_SALE"
+          )
         );
         break;
       case "na":
         setFiltered(
-          results.filter((book) => book.saleInfo.saleability !== "FOR_SALE")
+          filteredBook.filter(
+            (book) => book.saleInfo.saleability !== "FOR_SALE"
+          )
         );
         break;
       default:
         return null;
     }
     setCurrentPage(1);
-  };
+  },[searchResult]);
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  if (searchResult === 0) {
-    slicedResults = 0;
-  } else if (filtered.length <= 0) {
-    const results = searchResult;
-    slicedResults = results.slice(indexOfFirstPost, indexOfLastPost);
-  } else {
-    const results = filtered;
-    slicedResults = results.slice(indexOfFirstPost, indexOfLastPost);
-  }
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const moddleToggleHandler = () => {
+  const modalToggleHandler = () => {
     setModal(!modal);
   };
 
@@ -96,11 +92,13 @@ const BookSearch = () => {
     alert("ADDED TO CART!!!");
   };
 
+
+  let booksDetails = null;
   if (modal) {
     booksDetails = (
       <BookDetails
         bookDetails={clickedBook}
-        toggle={moddleToggleHandler}
+        toggle={modalToggleHandler}
         addToCart={addToCartHandler}
       />
     );
@@ -108,32 +106,31 @@ const BookSearch = () => {
 
   return (
     <div className={classes.Container}>
-      <Modal clicked={toggleHandler} show={modal}>
+      <Modal clicked={modalToggleHandler} show={modal}>
         {booksDetails}
       </Modal>
       <div className={classes.SearchArea}>
         <SearchForm submitForm={handleFormSubmit} />
-        <Filters loading={loading} filterBy={(e) => bookFilterHandler(e)} />
+        <Filters loading={loading} filterBy={bookFilterHandler} />
       </div>
-      <Pagination
-        loading={loading}
-        postsPerPage={postsPerPage}
-        totalPosts={filtered.length > 0 ? filtered.length : searchResult.length}
-        currentPage={currentPage}
-        paginate={paginate}
-      />
+      {
+        <Pagination
+          loading={loading}
+          postsPerPage={postsPerPage}
+          totalPosts={
+            filtered.length === undefined
+              ? searchResult.length
+              : filtered.length
+          }
+          currentPage={currentPage}
+          paginate={paginate}
+        />
+      }
       <SearchResults
         addToCart={addToCartHandler}
         loading={loading}
         toggleModal={handleBookModal}
-        bookResults={slicedResults}
-      />
-      <Pagination
-        loading={loading}
-        postsPerPage={postsPerPage}
-        totalPosts={searchResult.length}
-        currentPage={currentPage}
-        paginate={paginate}
+        bookResults={slicedPage}
       />
     </div>
   );

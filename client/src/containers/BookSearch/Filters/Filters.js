@@ -10,7 +10,9 @@ const Filters = ({ filterBy, loading }) => {
       setSetlectedInput("all");
     }
     filterBy(selectedInput);
-  }, [selectedInput, loading]);
+  }, [filterBy, selectedInput, loading]);
+
+  console.log("[FILTERS.JS] REDNDERED.");
 
   return (
     <div className={classes.Container}>

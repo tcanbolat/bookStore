@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import classes from "./searchResults.module.css";
 import PlaceHolder from "../UI/PlaceHolder/placeHolder";
-import OutOfStock from "../../assets/images/outOfStock.svg";
 import ShoppingCart from "../../assets/images/shoppingCart.svg";
 import Spinner from "../UI/Spinner/Spinner";
 
-const searchResults = (props) => {
-  let books = props.bookResults;
-  let bookCard = [];
-
+const SearchResults = (props) => {
+  const books = props.bookResults;
+  let bookCard = <PlaceHolder message={"Search for a book!"} />;
+console.log(books);
   if (books === 0) {
     bookCard = <PlaceHolder message={"No results, please try again"} />;
   } else if (books.length > 0) {
@@ -30,7 +29,7 @@ const searchResults = (props) => {
                 ${book.saleInfo.listPrice.amount}
               </h1>
               <img
-              onClick={props.addToCart}
+                onClick={props.addToCart}
                 className={classes.Cart}
                 alt="shopping cart"
                 src={ShoppingCart}
@@ -39,30 +38,19 @@ const searchResults = (props) => {
           ) : (
             <div className={classes.Price}>
               <h2>out of stock</h2>
-              <img
-                alt="out-of-stock"
-                className={classes.NotAvail}
-                src={OutOfStock}
-              />
             </div>
           )}
           <h2 className={classes.card_title}>{book.volumeInfo.title}</h2>
         </div>
       </div>
     ));
-  } else {
-    bookCard = <PlaceHolder message={"Search for a book!"} />;
-  }
-
-  if (props.loading) {
-    bookCard = <Spinner />;
   }
 
   return (
     <div className={classes.main}>
-      <div className={classes.cards}>{bookCard}</div>
+      {props.loading ? <Spinner /> : <div className={classes.cards}>{bookCard}</div>}      
     </div>
   );
 };
 
-export default searchResults;
+export default SearchResults;

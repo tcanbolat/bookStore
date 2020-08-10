@@ -7,15 +7,14 @@ const SearchForm = ({submitForm}) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(input);
     submitForm(input);
     setInput("");
   };
 
-  console.log("SEARCHFORM>JS : RENDERING...");
+  console.log("[SEARCHFORM.JS] RENDERED");
 
   return (
-    <div className={[classes.SearchContainer, ]}>
+    <div className={classes.SearchContainer}>
       <form onSubmit={submitHandler}>
         <input
         className={classes.Input}

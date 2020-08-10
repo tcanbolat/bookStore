@@ -15,8 +15,6 @@ module.exports = {
               startIndex[i]
           )
           .then((results) => {
-            // console.log(results.data.items)
-            if (!results.data.items) return res.json(0);
             return results.data.items.filter(
               (result) =>
                 result.volumeInfo.title &&
