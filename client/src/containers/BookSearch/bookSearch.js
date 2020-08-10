@@ -8,6 +8,7 @@ import Modal from "../../components/UI/Modal/modal";
 import BookDetails from "../../components/BookDetails/bookDetails";
 import Pagination from "../../components/Pagination/Pagination";
 import Filters from "./Filters/Filters";
+import MainBody from "../../components/MainBody/MainBody";
 
 const BookSearch = () => {
   const [searchResult, setSearchResult] = useState([]);
@@ -105,7 +106,7 @@ const BookSearch = () => {
   }
 
   return (
-    <div className={classes.Container}>
+    <MainBody>
       <Modal clicked={modalToggleHandler} show={modal}>
         {booksDetails}
       </Modal>
@@ -132,7 +133,7 @@ const BookSearch = () => {
         toggleModal={handleBookModal}
         bookResults={slicedPage}
       />
-    </div>
+    </MainBody>
   );
 };
 

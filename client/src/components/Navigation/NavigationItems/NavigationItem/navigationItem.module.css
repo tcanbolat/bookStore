@@ -46,4 +46,6 @@
   right: 0;
 }
 
-
+.active {
+  border-bottom: 4px solid #b85240;
+}
