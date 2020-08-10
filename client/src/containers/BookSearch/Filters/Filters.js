@@ -12,17 +12,12 @@ const Filters = ({ filterBy, loading }) => {
     filterBy(selectedInput);
   }, [selectedInput, loading]);
 
-  const setFilterHandler = (e) => {
-    const filterName = e.target.value;
-    setSetlectedInput(filterName);
-  };
-
   return (
     <div className={classes.Container}>
       <h3>Filter</h3>
       <form>
         <input
-          onChange={(e) => setFilterHandler(e)}
+          onChange={() => setSetlectedInput("available")}
           checked={selectedInput === "available"}
           type="radio"
           value="available"
@@ -31,14 +26,14 @@ const Filters = ({ filterBy, loading }) => {
         <input
           type="radio"
           value="na"
-          onChange={(e) => setFilterHandler(e)}
+          onChange={() => setSetlectedInput("na")}
           checked={selectedInput === "na"}
         />
         <label>not availabe</label>
         <input
           type="radio"
           value="all"
-          onChange={(e) => setFilterHandler(e)}
+          onChange={() => setSetlectedInput("all")}
           checked={selectedInput === "all"}
         />
         <label>show all</label>
