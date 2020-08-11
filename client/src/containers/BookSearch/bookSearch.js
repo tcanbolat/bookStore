@@ -38,10 +38,12 @@ const BookSearch = () => {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   let slicedPage = 0;
-  if (filtered.length <= 0 && searchResult.length <= 0) {  // checking for results to slice or not. 
+  if (filtered.length <= 0 && searchResult.length <= 0) {
+    // checking for results to slice or not.
     slicedPage = searchResult.slice(indexOfFirstPost, indexOfLastPost);
-  } 
-  if(filtered.length > 0) {  // checking whether to slice based on any filters or not.
+  }
+  if (filtered.length > 0) {
+    // checking whether to slice based on any filters or not.
     slicedPage = filtered.slice(indexOfFirstPost, indexOfLastPost);
   }
 
@@ -59,40 +61,48 @@ const BookSearch = () => {
     setClickedBook(book);
   };
 
-  const bookFilterHandler = useCallback((filterValue) => {
-    const filteredBook = searchResult;
-    switch (filterValue) {
-      case "all":
-        setFiltered(filteredBook);
-        break;
-      case "available":
-        setFiltered(
-          filteredBook.filter(
-            (book) => book.saleInfo.saleability !== "NOT_FOR_SALE"
-          )
-        );
-        break;
-      case "na":
-        setFiltered(
-          filteredBook.filter(
-            (book) => book.saleInfo.saleability !== "FOR_SALE"
-          )
-        );
-        break;
-      default:
-        return null;
-    }
-    setCurrentPage(1);
-  },[searchResult]);
+  const bookFilterHandler = useCallback(
+    (filterValue) => {
+      const filteredBook = searchResult;
+      switch (filterValue) {
+        case "all":
+          setFiltered(filteredBook);
+          break;
+        case "available":
+          setFiltered(
+            filteredBook.filter(
+              (book) => book.saleInfo.saleability !== "NOT_FOR_SALE"
+            )
+          );
+          break;
+        case "na":
+          setFiltered(
+            filteredBook.filter(
+              (book) => book.saleInfo.saleability !== "FOR_SALE"
+            )
+          );
+          break;
+        default:
+          return null;
+      }
+      setCurrentPage(1);
+    },
+    [searchResult]
+  );
 
   const modalToggleHandler = () => {
     setModal(!modal);
   };
 
   const addToCartHandler = () => {
-    alert("ADDED TO CART!!!");
+    API.addToCart(clickedBook)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
-
 
   let booksDetails = null;
   if (modal) {

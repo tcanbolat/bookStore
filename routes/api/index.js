@@ -1,16 +1,16 @@
 const path = require("path");
 const router = require("express").Router();
-const bookRoutes = require("./books");
+const cartRoutes = require("./cart");
 const googleRoutes = require("./google");
 
-// Book routes
-// router.use("/books", bookRoutes);
+// cart routes
+router.use("/cart", cartRoutes);
 
 // Google Routes
 router.use("/google", googleRoutes);
 
 // For anything else, render the html page
-router.use(function(req, res) {
+router.use((req, res) => {
   res.sendFile(path.join(__dirname, "../../client/build/index.html"));
 });
 

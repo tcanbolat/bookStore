@@ -6,6 +6,7 @@ import Button from "../UI/Button/Button";
 import Rater from "../UI/Rater/Rater";
 
 const bookDetails = (props) => {
+
   const { bookDetails } = props;
   return (
     <Aux>

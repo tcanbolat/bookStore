@@ -1,6 +1,7 @@
 const axios = require("axios");
 module.exports = {
-  findAll: function (req, res) {
+  findAll: (req, res) => {
+    const request = req.query.q;
     const startIndex = ["1", "41", "81", "121"];
     let allResults = [];
     const bookRequests = [];
@@ -10,7 +11,7 @@ module.exports = {
         axios
           .get(
             "https://www.googleapis.com/books/v1/volumes?q=" +
-              req.query.q +
+            request +
               "&maxResults=40&startIndex=" +
               startIndex[i]
           )
@@ -34,6 +35,7 @@ module.exports = {
     Promise.all(bookRequests).then(() => {
       const removeDuplicates = new Map(allResults.map((o) => [o.id, o]));
       const newResults = [...removeDuplicates.values()];
+      // console.log(newResults.title); // try to sort book by title  that matches request.
       res.json(newResults);
     }).catch(err => {
       res.json(err);
