@@ -10,10 +10,6 @@ const SearchResults = (props) => {
   let bookCard = <PlaceHolder message={"Search for a book!"} />;
 console.log(books);
 
-// const quickSaveHandler = (book) => {
-//   console.log(book);
-// }
-
   if (books === 0) {
     bookCard = <PlaceHolder message={"No results, please try again"} />;
   } else if (books.length > 0) {
