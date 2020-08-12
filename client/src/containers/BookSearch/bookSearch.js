@@ -61,6 +61,10 @@ const BookSearch = () => {
     setClickedBook(book);
   };
 
+  const modalToggleHandler = () => {
+    setModal(!modal);
+  };
+
   const bookFilterHandler = useCallback(
     (filterValue) => {
       const filteredBook = searchResult;
@@ -90,18 +94,14 @@ const BookSearch = () => {
     [searchResult]
   );
 
-  const modalToggleHandler = () => {
-    setModal(!modal);
-  };
-
-  const addToCartHandler = () => {
-    API.addToCart(clickedBook)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const addToCartHandler = (book) => {
+    API.addToCart(book)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   let booksDetails = null;
@@ -110,7 +110,7 @@ const BookSearch = () => {
       <BookDetails
         bookDetails={clickedBook}
         toggle={modalToggleHandler}
-        addToCart={addToCartHandler}
+        addToCart={() => addToCartHandler(clickedBook)}
       />
     );
   }
