@@ -28,6 +28,8 @@ module.exports = {
           })
           .then((books) => {
             allResults = [...allResults, ...books]
+          }).catch((err) => {
+            res.json(err);
           })
       );
     }

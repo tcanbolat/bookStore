@@ -19,9 +19,9 @@ const Pagination = ({
     <nav>
       {totalPosts === 0 || totalPosts === undefined || loading ? null : <p>{"Total Results: " + totalPosts}</p>}
       {loading ? null : (
-        <ul className={classes.Pagination}>
+        <div className={classes.Pagination}>
           {pageNumbers.map((number) => (
-            <li
+            <span
               onClick={() => paginate(number)}
               key={number}
               className={[
@@ -30,9 +30,9 @@ const Pagination = ({
               ].join(" ")}
             >
               <span>{number}</span>
-            </li>
+            </span>
           ))}
-        </ul>
+        </div>
       )}
     </nav>
   );

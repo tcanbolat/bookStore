@@ -1,4 +1,39 @@
 .Orders {
-  border: 1px solid black;
-  flex: 30%;
+  border-left: 1px solid #2f9fe0;
+  flex: 25%;
+  padding-left: 10px;
+  height: fit-content;
+}
+
+.Orders em {
+  color: #2f9fe0;
+  font-weight: 700;
+}
+
+.Orders h4 {
+  border-bottom: 4px solid #2f9fe0;
+  width: fit-content;
+}
+
+.LineBreak {
+  max-width: 40%;
+  margin: 0px;
+  margin-bottom: 20px;
+  border: 0.1px solid red;
+}
+
+@media (max-width: 500px) {
+  .Orders {
+    flex: 40%;
+    border-left: none;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  h4, .LineBreak {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    font-size: 30px;
+  }
+
 }

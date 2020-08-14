@@ -2,8 +2,9 @@ import React from "react";
 
 import classes from "./searchResults.module.css";
 import PlaceHolder from "../UI/PlaceHolder/placeHolder";
-import ShoppingCart from "../../assets/images/shoppingCart.svg";
 import Spinner from "../UI/Spinner/Spinner";
+import MainBody from "../MainBody/MainBody";
+import Button from "../UI/Button/Button";
 
 const SearchResults = (props) => {
   const books = props.bookResults;
@@ -14,9 +15,8 @@ console.log(books);
     bookCard = <PlaceHolder message={"No results, please try again"} />;
   } else if (books.length > 0) {
     bookCard = books.map((book) => (
-      <div key={book.id} className={classes.cards_item}>
-        <div className={classes.card}>
-          <div className={classes.card_image}>
+      <div key={book.id} className={classes.CardItem}>
+          <div className={classes.CardImage}>
             <img
               onClick={() => props.toggleModal(book.id)}
               src={book.volumeInfo.imageLinks.thumbnail}
@@ -24,33 +24,31 @@ console.log(books);
               className={classes.BookImage}
             />
           </div>
+          <div className={classes.BookBody}>
+          <h4 className={classes.CardTitle}>{book.volumeInfo.title}</h4>
           {book.saleInfo.listPrice ? (
-            <div className={classes.Price}>
-              <h1 className={classes.card_title}>
+            <div className={classes.Details}>
+              <h4 className={classes.Price}>
                 ${book.saleInfo.listPrice.amount}
-              </h1>
-              <img
-                onClick={() => props.addToCart(book)}
-                className={classes.Cart}
-                alt="shopping cart"
-                src={ShoppingCart}
-              />
+              </h4>
+            <button className={classes.Button} onClick={() => props.addToCart(book)}>
+              ADD TO CART
+            </button>
             </div>
           ) : (
-            <div className={classes.Price}>
-              <h2>out of stock</h2>
+            <div className={classes.Details}>
+              <h3>out of stock</h3>
             </div>
           )}
-          <h2 className={classes.card_title}>{book.volumeInfo.title}</h2>
-        </div>
+          </div>
       </div>
     ));
   }
 
   return (
-    <div className={classes.main}>
-      {props.loading ? <Spinner /> : <div className={classes.cards}>{bookCard}</div>}      
-    </div>
+    <MainBody>
+      {props.loading ? <Spinner /> : <div className={classes.BookCardBody}>{bookCard}</div>}      
+    </MainBody>
   );
 };
 

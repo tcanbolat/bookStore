@@ -1,6 +1,6 @@
 .Container {
   display: flex;
-  width: 60%;
+  flex: 40%;
   margin: 0 2rem;
   align-items: center;
 }
@@ -20,16 +20,34 @@ input {
 
 .Container h3 {
   margin-left: 1rem;
-  border-bottom: 1px solid #22242626;
+  border-bottom: 3px solid #b85240;
   opacity: 80%;
 }
 
-@media (max-width: 736px) {
-  .Container input {
+@media (max-width: 550px) {
+  .Container {
     display: block;
+    text-align: center;
   }
+}
 
-  .Container form {
-    margin-left: 15px;
-  }
+@media (max-width: 500px) {
+.Container label, input {
+  text-align: center;
+  display: block;
+}
+
+input {
+  display: inline-block;
+}
+
+.Container form {
+  padding: 0px 0px 35px 0px;
+}
+
+.Container input {
+  margin: 15px;
+}
+
+
 }

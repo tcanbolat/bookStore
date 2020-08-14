@@ -1,103 +1,84 @@
-@import url("https://fonts.googleapis.com/css?family=Quicksand:400,700");
-
-body {
-  color: #272727;
-  font-family: "Quicksand", serif;
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0;
-  padding: 1rem;
+.BookCardBody {
+  display: flex;
+  flex-flow: wrap;
 }
 
-.main {
-  background: #fff;
-  margin: 1rem 0;
-  padding: 1em 1em;
-  border-radius: 0.28571429rem;
-  max-width: 80%;
-  margin: 0 auto;
-  margin-top: 40px;
-  align-items: center;
+.CardItem {
+  display: flex;
+  flex-wrap: nowrap;
+  flex: 33%;
+  padding: 10px;
+  padding-left: 5px;
 }
 
-h1 {
-  font-size: 40px !important;
-  margin-bottom: 0px;
+.BookImage {
+  margin-left: 15px;
+  border-radius: 0.3rem;
 }
 
-.Price h2 {
+.BookImage:hover {
+  cursor: pointer;
+  border-bottom: 3px solid #b85240;
+  border-left: 3px solid #2f9fe0;
+}
+
+.BookBody {
+  padding-left: 5px;
+}
+
+.Details {
+  display: block;
+}
+
+.Details h3 {
   margin-bottom: 0px;
   opacity: 55%;
   cursor: not-allowed;
 }
 
-.BookImage {
-  height: auto;
-  max-width: 100%;
-  vertical-align: middle;
-}
-
-.BookImage:hover {
-cursor: pointer;
-}
-
-.Cart {
-  width: 40px;
-}
-
-.Cart:hover {
-  width: 50px;
-  cursor: pointer;
-}
-
 .Price {
-  display: flex;
+  font-size: 28px;
+  margin: 5px;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.15);
+  width: fit-content;
 }
 
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.Details button {
+  padding: 7px 7px 7px 30px;
+  background: url("../../assets/images/shoppingCart.svg") no-repeat;
+  border: 2px solid #2f9fe0;
+  border-radius: 0.3rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  font-size: 11px;
 }
 
-.cards_item {
-  display: flex;
-  padding: 1rem;
+.Details button:hover {
+  color: white;
+  background-color: #b85240;
+  border: 2px solid #b85240;
 }
 
-@media (min-width: 40rem) {
-  .cards_item {
-    width: 50%;
+.Details button:active {
+  outline-style: none;
+  box-shadow: 0px 0px 5px #555 inset;
+}
+
+.Details button:focus {
+  outline-style: none;
+}
+
+.CardTitle {
+  margin: 1px;
+}
+
+@media (max-width: 1150px) {
+  .CardItem {
+    flex: 50%;
   }
 }
 
-@media (min-width: 56rem) {
-  .cards_item {
-    width: 33.3333%;
+@media (max-width: 500px) {
+  .CardItem {
+    flex: 100%;
   }
 }
-
-.card {
-  background-color: transparent;
-  border-radius: 0.25rem;
-  /* box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25); */
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  display: block;
-}
-
-.card_content {
-  padding: 1rem;
-}
-
-.card_title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin: 0px;
-}
-
-

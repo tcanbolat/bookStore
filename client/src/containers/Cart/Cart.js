@@ -7,6 +7,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import Button from "../../components/UI/Button/Button";
 import Orders from "../../components/Orders/Orders";
 import Aux from "../../hoc/Auxillary/Auxillary";
+import MainBody from "../../components/MainBody/MainBody";
 
 const Cart = React.memo(() => {
   const [cartItems, setCartItems] = useState([]);
@@ -64,7 +65,7 @@ const Cart = React.memo(() => {
         countRef.current = itemToAdd.count;
         setTimeout(() => {
           if (itemToAdd.count === countRef.current) {
-          console.log(countRef);
+            console.log(countRef);
             API.updateItemCount({
               id: id,
               count: itemToAdd.count,
@@ -134,7 +135,7 @@ const Cart = React.memo(() => {
       setCartItems(newresults);
       setTimeout(() => {
         if (item.count === countRef.current) {
-        console.log(countRef);
+          console.log(countRef);
           API.updateItemCount({
             id: id,
             count: item.count,
@@ -151,70 +152,72 @@ const Cart = React.memo(() => {
   };
 
   return (
-    <Aux>
+    <MainBody>
       {loading ? (
         <Spinner />
+      ) : cartItems.length <= 0 ? (
+        <div
+          style={{ width: "80%", margin: "0 auto", marginTop: "250px" }}
+          className={classes.Cart}
+        >
+          {emptyCart}
+        </div>
       ) : (
         <div className={classes.Cart}>
-        <Orders cart={cartItems} />
-          {cartItems.length <= 0 ? (
-            emptyCart
-          ) : (
-            <div className={classes.CartItem}>
-              {cartItems.map((book) => (
-                <Aux>
-                  <div key={book.id}>
-                    <img
-                      style={{ width: "90px" }}
-                      src={book.volumeInfo.imageLinks.thumbnail}
-                      alt="book cover"
-                    />
-                    <span>
-                      <h3>{book.volumeInfo.title}</h3>
-                      <Button
-                        clicked={() => removeFromCartHandler(book.id)}
-                        btnType="Danger"
+          <Orders cart={cartItems} />
+          <div className={classes.CartItem}>
+            {cartItems.map((book) => (
+              <Aux>
+                <div key={book.id}>
+                  <img
+                    style={{ width: "90px" }}
+                    src={book.volumeInfo.imageLinks.thumbnail}
+                    alt="book cover"
+                  />
+                  <span>
+                    <h3>{book.volumeInfo.title}</h3>
+                    <Button
+                      clicked={() => removeFromCartHandler(book.id)}
+                      btnType="Danger"
+                    >
+                      REMOVE FROM CART
+                    </Button>
+                    <p>${book.saleInfo.listPrice.amount}</p>
+                    <div className={classes.ItemCounter}>
+                      <div
+                        onClick={() => {
+                          itemCounterHandler("subtract", book.id);
+                        }}
                       >
-                        REMOVE FROM CART
-                      </Button>
-                      <p>${book.saleInfo.listPrice.amount}</p>
-                      <div className={classes.ItemCounter}>
-                        <div
-                          onClick={() => {
-                            itemCounterHandler("subtract", book.id);
-                          }}
-                        >
-                          &#8681;
-                        </div>
-                        <input
-                          type="number"
-                          style={{
-                            width:
-                              parseInt(book.count) > 100 ? "2.8em" : "2.1em",
-                          }}
-                          id="nm-inp"
-                          className="input-wrap"
-                          value={book.count ? book.count : 1}
-                          onChange={(e) => updateItemCountHandler(e, book.id)}
-                        />
-                        <div
-                          onClick={() => {
-                            itemCounterHandler("add", book.id);
-                          }}
-                        >
-                          &#8679;
-                        </div>
+                        &#8681;
                       </div>
-                    </span>
-                  </div>
-                  <span className={classes.Divider}></span>
-                </Aux>
-              ))}
-            </div>
-          )}
+                      <input
+                        type="number"
+                        style={{
+                          width: parseInt(book.count) > 100 ? "2.8em" : "2.1em",
+                        }}
+                        id="nm-inp"
+                        className="input-wrap"
+                        value={book.count ? book.count : 1}
+                        onChange={(e) => updateItemCountHandler(e, book.id)}
+                      />
+                      <div
+                        onClick={() => {
+                          itemCounterHandler("add", book.id);
+                        }}
+                      >
+                        &#8679;
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <span className={classes.Divider}></span>
+              </Aux>
+            ))}
+          </div>
         </div>
       )}
-    </Aux>
+    </MainBody>
   );
 });
 

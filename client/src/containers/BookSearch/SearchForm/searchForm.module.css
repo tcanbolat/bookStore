@@ -1,8 +1,6 @@
 .SearchContainer {
   position: relative;
-  width: 30%;
-  min-width: 250px;
-  display: table;
+  flex: 20%;
 }
 
 .Input {
