@@ -21,11 +21,14 @@ module.exports = {
     console.log(req.params.id);
     axios
       .delete(
-        "https://bookstore-709eb.firebaseio.com/cart/" + req.params.id + ".json",{
-            headers: {
-              type: "application/json",
-            }
-          }
+        "https://bookstore-709eb.firebaseio.com/cart/" +
+          req.params.id +
+          ".json",
+        {
+          headers: {
+            type: "application/json",
+          },
+        }
       )
       .then(() => {
         res.json();
@@ -45,6 +48,23 @@ module.exports = {
       .catch((err) => {
         res.json(err);
         console.log(err);
+      });
+  },
+  updateItemCount: (req, res) => {
+    console.log(req.body.count);
+    axios
+      .put(
+        "https://bookstore-709eb.firebaseio.com/cart/" +
+          req.body.id +
+          "/count.json",
+        JSON.stringify(req.body.count) 
+      )
+      .then(() => {
+        res.json();
+      })
+      .catch((err) => {
+        console.log(err);
+        res.err;
       });
   },
 };
