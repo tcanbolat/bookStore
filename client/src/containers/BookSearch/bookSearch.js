@@ -18,6 +18,7 @@ const BookSearch = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(20);
   const [filtered, setFiltered] = useState([]);
+  const [addingToCart, setAddingToCart] = useState(false);
 
   const handleFormSubmit = (value) => {
     setLoading(true);
@@ -96,23 +97,26 @@ const BookSearch = () => {
 
   const addToCartHandler = (e, book) => {
     e.preventDefault();
+    setAddingToCart(true);
     API.addToCart(book)
       .then((res) => {
         console.log(res);
-        const bookIndex = slicedPage.findIndex((b) => {
+        const bookIndex = filtered.findIndex((b) => {
           return b.id === book.id;
         });
         const added = {
-          ...slicedPage[bookIndex],
+          ...filtered[bookIndex],
         };
         added["count"] = 1;
         added["inCart"] = true;
-        const newresults = [...slicedPage];
+        const newresults = [...filtered];
         newresults[bookIndex] = added;
         setFiltered(newresults);
+        setAddingToCart(false);
       })
       .catch((err) => {
         console.log(err);
+        setAddingToCart(false);
       });
   };
 
@@ -150,6 +154,7 @@ const BookSearch = () => {
         />
       }
       <SearchResults
+        adding={addingToCart}
         addToCart={(e, book) => addToCartHandler(e, book)}
         loading={loading}
         toggleModal={handleBookModal}

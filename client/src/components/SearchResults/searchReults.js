@@ -1,4 +1,5 @@
 import React from "react";
+import {withRouter} from "react-router-dom"
 
 import classes from "./searchResults.module.css";
 import PlaceHolder from "../UI/PlaceHolder/placeHolder";
@@ -32,7 +33,7 @@ const SearchResults = (props) => {
               </h4>
               {book.inCart ? (
                 <button disabled className={classes.InCart}>
-                 &#10004; {book.count} in cart    
+                &#10004; <strong> {book.count}</strong> in cart    
                 </button>
               ) : (
                 <button
@@ -64,4 +65,4 @@ const SearchResults = (props) => {
   );
 };
 
-export default SearchResults;
+export default withRouter(SearchResults);

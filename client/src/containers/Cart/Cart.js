@@ -12,7 +12,9 @@ import MainBody from "../../components/MainBody/MainBody";
 const Cart = React.memo(() => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const countRef = useRef();
+  const [itemCount, setItemCount] = useState();
+  const [itemId, setItemId] = useState(null);
+  const countRef = useRef(null);
 
   const emptyCart = <PlaceHolder message="Your cart is empty" />;
 
@@ -28,6 +30,25 @@ const Cart = React.memo(() => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log(countRef);
+      console.log(itemCount);
+      if (itemCount === countRef.current) {
+        API.updateItemCount({
+          id: itemId,
+          count: itemCount,
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }, 500);
+  }, [itemCount, itemId]);
 
   const removeFromCartHandler = (e, id) => {
     e.preventDefault();
@@ -47,109 +68,45 @@ const Cart = React.memo(() => {
 
   console.log("STATE: ", cartItems);
 
-  const itemCounterHandler = (option, id) => {
+  const itemCounterHandler = (option, id, e) => {
+    const cartIndex = cartItems.findIndex((b) => {
+      return b.id === id;
+    });
+    const item = {
+      ...cartItems[cartIndex],
+    };
+
     switch (option) {
       case "add":
-        const cartIndexToAdd = cartItems.findIndex((b) => {
-          return b.id === id;
-        });
-        const itemToAdd = {
-          ...cartItems[cartIndexToAdd],
-        };
-        if (!itemToAdd.count) {
-          itemToAdd.count = 1;
+        item.count = parseInt(item.count) + 1;
+        if (item.count > 550) {
+          return item;
         }
-        itemToAdd.count = parseInt(itemToAdd.count) + 1;
-        if (itemToAdd.count > 150) {
-          return itemToAdd;
-        }
-        countRef.current = itemToAdd.count;
-        setTimeout(() => {
-          if (itemToAdd.count === countRef.current) {
-            console.log(countRef);
-            API.updateItemCount({
-              id: id,
-              count: itemToAdd.count,
-            })
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
-        }, 1100);
-        const addedUpdate = [...cartItems];
-        addedUpdate[cartIndexToAdd] = itemToAdd;
-        setCartItems(addedUpdate);
+        countRef.current = item.count;
+        setItemCount(item.count);
+        setItemId(id);
         break;
       case "subtract":
-        const cartIndexToSubtract = cartItems.findIndex((b) => {
-          return b.id === id;
-        });
-        const itemToSub = {
-          ...cartItems[cartIndexToSubtract],
-        };
-
-        itemToSub.count = parseInt(itemToSub.count) - 1;
-        if (!itemToSub.count) {
-          itemToSub.count = 1;
+        item.count = parseInt(item.count) - 1;
+        if (item.count < 1) {
+          return item;
         }
-        countRef.current = itemToSub;
-        setTimeout(() => {
-          console.log(countRef.current.count);
-          console.log(itemToSub.count);
-          if (itemToSub.count === countRef.current.count) {
-            API.updateItemCount({
-              id: id,
-              count: itemToSub.count,
-            })
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
-        }, 1100);
-        const subUpdate = [...cartItems];
-        subUpdate[cartIndexToSubtract] = itemToSub;
-        setCartItems(subUpdate);
+        countRef.current = item.count;
+        setItemCount(item.count);
+        setItemId(id);
         break;
       default:
-        return null;
-    }
-  };
-
-  const updateItemCountHandler = (e, id) => {
-    if (e.target.value >= 1 && e.target.value <= 150) {
-      const cartIndex = cartItems.findIndex((b) => {
-        return b.id === id;
-      });
-      const item = {
-        ...cartItems[cartIndex],
-      };
-      item.count = e.target.value;
-      countRef.current = e.target.value;
-      const newresults = [...cartItems];
-      newresults[cartIndex] = item;
-      setCartItems(newresults);
-      setTimeout(() => {
-        if (item.count === countRef.current) {
-          console.log(countRef);
-          API.updateItemCount({
-            id: id,
-            count: item.count,
-          })
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+        if (e.target.value >= 1 && e.target.value <= 550) {
+          item.count = e.target.value;
+          countRef.current = item.count;
+          setItemCount(item.count);
+          setItemId(id);
         }
-      }, 1100);
     }
+
+    const updatedCartItems = [...cartItems];
+    updatedCartItems[cartIndex] = item;
+    setCartItems(updatedCartItems);
   };
 
   return (
@@ -200,7 +157,9 @@ const Cart = React.memo(() => {
                         id="nm-inp"
                         className="input-wrap"
                         value={book.count ? book.count : 1}
-                        onChange={(e) => updateItemCountHandler(e, book.id)}
+                        onChange={(e) =>
+                          itemCounterHandler("input", book.id, e)
+                        }
                       />
                       <div
                         onClick={() => {
