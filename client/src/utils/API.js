@@ -19,7 +19,7 @@ export default {
   updateItemCount: (update) => {
     if (cancel !== undefined) {
       cancel({
-        message: "subsequent request canclled"
+        message: "subsequent request canclled",
       });
     }
     return axios.put("/api/cart", update, {

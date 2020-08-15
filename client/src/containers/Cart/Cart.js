@@ -158,7 +158,7 @@ const Cart = React.memo(() => {
         <Spinner />
       ) : cartItems.length <= 0 ? (
         <div
-          style={{ width: "80%", margin: "0 auto", marginTop: "250px" }}
+          style={{ width: "80%", margin: "0 auto" }}
           className={classes.Cart}
         >
           {emptyCart}

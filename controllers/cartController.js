@@ -40,13 +40,14 @@ module.exports = {
   },
   addToCart: (req, res) => {
     console.log(req.body);
+    req.body["count"] = 1;
     axios
-      .post("https://bookstore-709eb.firebaseio.com/cart.json/", req.body)
+      .post("https://bookstore-709eb.firebaseio.com/cart.json", req.body)
       .then(() => {
         res.json();
       })
       .catch((err) => {
-        res.json(err);
+        // res.json(err);
         console.log(err);
       });
   },

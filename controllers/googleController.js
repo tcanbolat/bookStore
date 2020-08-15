@@ -3,7 +3,7 @@ module.exports = {
   findAll: (req, res) => {
     const request = req.query.q;
     const startIndex = ["1", "41", "81", "121"];
-    let allResults = [];
+    const allResults = [];
     const bookRequests = [];
 
     for (i = 0; i < startIndex.length; i++) {
@@ -11,7 +11,7 @@ module.exports = {
         axios
           .get(
             "https://www.googleapis.com/books/v1/volumes?q=" +
-            request +
+              request +
               "&maxResults=40&startIndex=" +
               startIndex[i]
           )
@@ -26,21 +26,47 @@ module.exports = {
                 result.volumeInfo.imageLinks.thumbnail
             );
           })
-          .then((books) => {
-            allResults = [...allResults, ...books]
-          }).catch((err) => {
+          .then((booksArray) => {
+            booksArray.map((results) => {
+              allResults.push(results);
+            });
+          })
+          .catch((err) => {
             res.json(err);
           })
       );
     }
 
-    Promise.all(bookRequests).then(() => {
-      const removeDuplicates = new Map(allResults.map((o) => [o.id, o]));
-      const newResults = [...removeDuplicates.values()];
-      // console.log(newResults.title); // try to sort book by title  that matches request.
-      res.json(newResults);
-    }).catch(err => {
-      res.json(err);
-    })
+    Promise.all(bookRequests)
+      .then(() => {
+        const uniqueResults = allResults.filter((item, index) => {
+          return allResults.indexOf(item.id) !== index.id;
+        });
+        axios
+          .get("https://bookstore-709eb.firebaseio.com/cart.json")
+          .then((response) => {
+            const array = [];
+            for (let key in response.data) {
+              array.push({ ...response.data[key] });
+            }
+            for (let i = 0; i < array.length; i++) {
+              const bookIndex = uniqueResults.findIndex((b) => {
+                return b.id === array[i].id;
+              });
+              const book = {
+                ...allResults[bookIndex],
+              };
+
+              book["inCart"] = true;
+
+              uniqueResults[bookIndex] = book;
+            }
+            res.json(uniqueResults);
+            console.log(uniqueResults);
+          });
+      })
+      .catch((err) => {
+        res.json(err);
+      });
   },
 };
