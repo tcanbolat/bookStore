@@ -13,7 +13,7 @@ const Orders = ({ cart }) => {
   console.log(priceArray);
   return (
     <div className={classess.Orders}>
-      <h4>Order Totals</h4>
+      <h4>sub total: ${subTotal.toFixed(2)}</h4>
       {cart.map((item) => {
         return (
           <div>

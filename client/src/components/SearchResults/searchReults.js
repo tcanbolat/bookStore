@@ -4,7 +4,6 @@ import classes from "./searchResults.module.css";
 import PlaceHolder from "../UI/PlaceHolder/placeHolder";
 import Spinner from "../UI/Spinner/Spinner";
 import MainBody from "../MainBody/MainBody";
-import Button from "../UI/Button/Button";
 
 const SearchResults = (props) => {
   const books = props.bookResults;
@@ -31,7 +30,7 @@ console.log(books);
               <h4 className={classes.Price}>
                 ${book.saleInfo.listPrice.amount}
               </h4>
-            <button className={classes.Button} onClick={() => props.addToCart(book)}>
+            <button className={classes.Button} onClick={(e) => props.addToCart(e,book)}>
               ADD TO CART
             </button>
             </div>

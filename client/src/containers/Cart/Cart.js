@@ -29,13 +29,14 @@ const Cart = React.memo(() => {
       });
   }, []);
 
-  const removeFromCartHandler = (id) => {
-    setLoading(true);
+  const removeFromCartHandler = (e, id) => {
+    e.preventDefault();
+    // setLoading(true);
     API.deleteBook(id)
       .then((res) => {
         const updateResults = cartItems.filter((item) => item.id !== id);
         setCartItems(updateResults);
-        setLoading(false);
+        // setLoading(false);
         console.log(updateResults);
       })
       .catch((err) => {
@@ -177,7 +178,7 @@ const Cart = React.memo(() => {
                   <span>
                     <h3>{book.volumeInfo.title}</h3>
                     <Button
-                      clicked={() => removeFromCartHandler(book.id)}
+                      clicked={(e) => removeFromCartHandler(e, book.id)}
                       btnType="Danger"
                     >
                       REMOVE FROM CART

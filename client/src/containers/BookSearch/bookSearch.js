@@ -94,7 +94,8 @@ const BookSearch = () => {
     [searchResult]
   );
 
-  const addToCartHandler = (book) => {
+  const addToCartHandler = (e, book) => {
+    e.preventDefault();
     API.addToCart(book)
       .then((res) => {
         console.log(res);
@@ -138,7 +139,7 @@ const BookSearch = () => {
         />
       }
       <SearchResults
-        addToCart={addToCartHandler}
+        addToCart={(e, book) => addToCartHandler(e, book)}
         loading={loading}
         toggleModal={handleBookModal}
         bookResults={slicedPage}

@@ -1,8 +1,15 @@
 .Orders {
-  border-left: 1px solid #2f9fe0;
-  flex: 25%;
+  height: 70vh; 
+  overflow-y:auto;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 100px;
+  border-radius: 0.1rem;
+  border-left: 3px solid #2f9fe0;
+  border-top: 1px solid rgba(34,36,38,.15);
+  border-bottom: 1px solid rgba(34,36,38,.15);
+  flex: 30%;
   padding-left: 10px;
-  height: fit-content;
 }
 
 .Orders em {
@@ -22,8 +29,10 @@
   border: 0.1px solid red;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 720px) {
   .Orders {
+    height: fit-content;
+    position: static;
     flex: 40%;
     border-left: none;
     text-align: center;
@@ -35,5 +44,4 @@
     margin-bottom: 20px;
     font-size: 30px;
   }
-
 }
