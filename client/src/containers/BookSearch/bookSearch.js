@@ -99,6 +99,17 @@ const BookSearch = () => {
     API.addToCart(book)
       .then((res) => {
         console.log(res);
+        const bookIndex = slicedPage.findIndex((b) => {
+          return b.id === book.id;
+        });
+        const added = {
+          ...slicedPage[bookIndex],
+        };
+        added["count"] = 1;
+        added["inCart"] = true;
+        const newresults = [...slicedPage];
+        newresults[bookIndex] = added;
+        setFiltered(newresults);
       })
       .catch((err) => {
         console.log(err);

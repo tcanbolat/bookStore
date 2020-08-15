@@ -45,19 +45,20 @@ module.exports = {
         axios
           .get("https://bookstore-709eb.firebaseio.com/cart.json")
           .then((response) => {
-            const array = [];
+            const cartArray = [];
             for (let key in response.data) {
-              array.push({ ...response.data[key] });
+              cartArray.push({ ...response.data[key] });
             }
-            for (let i = 0; i < array.length; i++) {
+            for (let i = 0; i < cartArray.length; i++) {
               const bookIndex = uniqueResults.findIndex((b) => {
-                return b.id === array[i].id;
+                return b.id === cartArray[i].id;
               });
               const book = {
                 ...allResults[bookIndex],
               };
 
               book["inCart"] = true;
+              book["count"] = cartArray[i].count;
 
               uniqueResults[bookIndex] = book;
             }
