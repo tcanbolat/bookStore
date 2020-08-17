@@ -53,12 +53,12 @@ const Cart = React.memo(() => {
   const removeFromCartHandler = (e, id) => {
     e.preventDefault();
     e.target.innerHTML = "&#8226;	&#8226;	&#8226;	&#8226;";
-    // setLoading(true);
+    setLoading(true);
     API.deleteBook(id)
       .then((res) => {
         const updateResults = cartItems.filter((item) => item.id !== id);
         setCartItems(updateResults);
-        // setLoading(false);
+        setLoading(false);
         console.log(updateResults);
       })
       .catch((err) => {
@@ -131,6 +131,7 @@ const Cart = React.memo(() => {
                 remove={(e, bookId) => removeFromCartHandler(e, bookId)}
                 count={(option, bookId, e) => itemCounterHandler(option, bookId, e)}
                 cart={cartItems}
+                loading={loading}
               />
             </Aux>
           </div>

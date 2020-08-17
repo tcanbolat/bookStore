@@ -45,10 +45,6 @@
   margin: 0px 5px 0px 0px;
 }
 
-.CheckoutBtn {
-  margin-top: 20px;
-}
-
 
 @media (max-width: 720px) {
   .Orders {

@@ -1,8 +1,5 @@
 import axios from "axios";
 
-let cancel;
-const CancelToken = axios.CancelToken;
-
 export default {
   searchForBooks: (q) => {
     return axios.get("/api/google", { params: { q: "title:" + q } });
@@ -13,10 +10,14 @@ export default {
   deleteBook: (id) => {
     return axios.delete("/api/cart/" + id);
   },
-  addToCart: function (book) {
+  addToCart: (book) => {
     return axios.post("/api/cart", book);
   },
   updateItemCount: (update) => {
+    // cancel token to cancel subsequent requests, coming from "/api/cart"
+    // the setTimout(); in Cart.js already catches all them, but this is here to use as well.
+    let cancel;
+    const CancelToken = axios.CancelToken;
     if (cancel !== undefined) {
       cancel({
         message: "subsequent request canclled",

@@ -5,7 +5,7 @@ import classes from "./cartItems.module.css";
 import Button from "../UI/Button/Button";
 import ItemCounter from "../ItemCounter/ItemCounter";
 
-const CartItems = ({ cart, remove, count }) => {
+const CartItems = ({ cart, remove, count, loading }) => {
   return (
     <div>
       {cart.map((item) => {
@@ -21,7 +21,7 @@ const CartItems = ({ cart, remove, count }) => {
               </div>
               <div className={classes.ItemDetails}>
                 <h3>{item.volumeInfo.title}</h3>
-                <Button clicked={(e) => remove(e, item.id)} btnType="Close">
+                <Button disabled={loading} clicked={(e) => remove(e, item.id)} btnType="Close">
                   Discard
                 </Button>
                 <br />

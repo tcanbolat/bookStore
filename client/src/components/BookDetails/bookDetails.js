@@ -41,7 +41,7 @@ const bookDetails = (props) => {
                 &#10004; <strong> {bookDetails.count}</strong> in cart
               </Button>
             ) : (
-              <Button btnType="CartBtn" clicked={(e) => props.addToCart(e, bookDetails)}>
+              <Button disabled={props.adding} btnType="CartBtn" clicked={(e) => props.addToCart(e, bookDetails)}>
                 add to cart
               </Button>
             )

@@ -24,11 +24,11 @@ module.exports = {
         "https://bookstore-709eb.firebaseio.com/cart/" +
           req.params.id +
           ".json",
-        {
-          headers: {
-            type: "application/json",
-          },
-        }
+        // {
+        //   headers: {
+        //     type: "application/json",
+        //   },
+        // }
       )
       .then(() => {
         res.json();
@@ -47,7 +47,7 @@ module.exports = {
         res.json();
       })
       .catch((err) => {
-        // res.json(err);
+        res.json(err);
         console.log(err);
       });
   },
