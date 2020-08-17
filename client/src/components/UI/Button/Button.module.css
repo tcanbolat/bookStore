@@ -7,7 +7,8 @@
 .CartBtn,
 .Close,
 .InCart,
-.Remove {
+.Remove,
+.Order {
   border-radius: 0.3rem;
   font-size: 11px;
 }
@@ -27,7 +28,10 @@
   background-color: #b64d3b;
 }
 
-.CartBtn:focus, .InCart:focus, .Close:focus {
+.CartBtn:focus,
+.InCart:focus,
+.Close:focus,
+.Order {
   outline-style: none;
 }
 
@@ -43,4 +47,22 @@
   font-size: 12px;
   border-color: #b64d3b;
   box-shadow: 2px 2px 5px rgb(70, 69, 69) inset !important;
+}
+
+.Order {
+  border: none;
+  background-color: rgb(243, 177, 54);
+  padding: 10px;
+  font-size: 1em;
+}
+
+.Order:hover {
+  color: white;
+  cursor: pointer;
+  background-color: rgb(175, 128, 40);
+}
+
+.Order:active {
+  box-shadow: 2px 2px 15px rgb(70, 69, 69) inset;
+  font-size: 0.99em;
 }

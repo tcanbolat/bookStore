@@ -1,7 +1,11 @@
 .CartItem {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin: 8px;
+  background-color: #f5f5f5;
+  width: auto;
+  padding-right: 10px;
+  border-radius: 0.2rem;
 }
 
 .ItemDetails {
@@ -35,4 +39,3 @@ em {
   color: #2f9fe0;
   font-weight: 700;
 }
-

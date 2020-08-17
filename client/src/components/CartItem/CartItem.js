@@ -10,8 +10,8 @@ const CartItems = ({ cart, remove, count }) => {
     <div>
       {cart.map((item) => {
         return (
-          <Aux>
-            <div key={item.id} className={classes.CartItem}>
+          <Aux key={item.id}>
+            <div className={classes.CartItem}>
               <div className={classes.ItemImage}>
                 <img
                   style={{ width: "90px" }}

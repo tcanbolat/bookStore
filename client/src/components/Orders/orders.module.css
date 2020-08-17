@@ -1,6 +1,5 @@
 .Orders {
-  height: 70vh; 
-  overflow-y:auto;
+  height: 70vh;
   position: -webkit-sticky;
   position: sticky;
   top: 100px;
@@ -10,18 +9,46 @@
   flex: 40%;
   padding-left: 10px;
   text-align: center;
+  padding: 20px;
 }
 
-.Orders h4 {
-  border-bottom: 4px solid #b85240;
-  width: fit-content;
+.ItemList {
+  padding: 5px;
+  height: 45vh;
+  overflow-y: auto;
+  border-radius: 0.2rem;
 }
 
 .OrderName {
   border-bottom: 2px solid #b85240;
   width: fit-content;
-  margin: 0 auto;
+  margin-bottom: 18px;
 }
+
+.OrderName p {
+  margin: 1px;
+}
+
+.TotalHeader {
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #2f9fe0;
+  width: fit-content;
+}
+
+.TotalBtn {
+  border-radius: 0.1rem;
+  background-color: grey;
+  color: white;
+  text-align: center;
+  padding: 5px 5px 5px 5px;
+  margin: 0px 5px 0px 0px;
+}
+
+.CheckoutBtn {
+  margin-top: 20px;
+}
+
 
 @media (max-width: 720px) {
   .Orders {
