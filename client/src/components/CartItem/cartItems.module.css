@@ -1,0 +1,38 @@
+.CartItem {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 8px;
+}
+
+.ItemDetails {
+  margin-left: 10px;
+}
+
+.ItemTotal {
+  border-bottom: 5px solid #b85240;
+  border-left: 5px solid #b85240;
+  width: fit-content;
+  border-radius: 0.2rem;
+  box-shadow: 4px solid darkred;
+  margin: 8px;
+  margin-bottom: 25px;
+  padding: 0px 0px 2px 8px;
+}
+
+.ItemTotal p {
+  margin: 5px;
+}
+
+.ItemImage {
+  border-left: 5px solid #2f9fe0;
+  border-top: 5px solid #2f9fe0;
+  padding-left: 8px;
+  padding-top: 8px;
+  border-radius: 0.2rem;
+}
+
+em {
+  color: #2f9fe0;
+  font-weight: 700;
+}
+

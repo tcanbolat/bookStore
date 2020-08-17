@@ -4,10 +4,10 @@ import classes from "./cart.module.css";
 import API from "../../utils/API";
 import PlaceHolder from "../../components/UI/PlaceHolder/placeHolder";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import Button from "../../components/UI/Button/Button";
 import Orders from "../../components/Orders/Orders";
 import Aux from "../../hoc/Auxillary/Auxillary";
 import MainBody from "../../components/MainBody/MainBody";
+import CartItems from "../../components/CartItem/CartItem";
 
 const Cart = React.memo(() => {
   const [cartItems, setCartItems] = useState([]);
@@ -52,6 +52,7 @@ const Cart = React.memo(() => {
 
   const removeFromCartHandler = (e, id) => {
     e.preventDefault();
+    e.target.innerHTML = "&#8226;	&#8226;	&#8226;	&#8226;";
     // setLoading(true);
     API.deleteBook(id)
       .then((res) => {
@@ -96,6 +97,7 @@ const Cart = React.memo(() => {
         setItemId(id);
         break;
       default:
+        e.preventDefault();
         if (e.target.value >= 1 && e.target.value <= 550) {
           item.count = e.target.value;
           countRef.current = item.count;
@@ -123,57 +125,14 @@ const Cart = React.memo(() => {
       ) : (
         <div className={classes.Cart}>
           <Orders cart={cartItems} />
-          <div className={classes.CartItem}>
-            {cartItems.map((book) => (
-              <Aux>
-                <div key={book.id}>
-                  <img
-                    style={{ width: "90px" }}
-                    src={book.volumeInfo.imageLinks.thumbnail}
-                    alt="book cover"
-                  />
-                  <span>
-                    <h3>{book.volumeInfo.title}</h3>
-                    <Button
-                      clicked={(e) => removeFromCartHandler(e, book.id)}
-                      btnType="Danger"
-                    >
-                      REMOVE FROM CART
-                    </Button>
-                    <p>${book.saleInfo.listPrice.amount}</p>
-                    <div className={classes.ItemCounter}>
-                      <div
-                        onClick={() => {
-                          itemCounterHandler("subtract", book.id);
-                        }}
-                      >
-                        &#8681;
-                      </div>
-                      <input
-                        type="number"
-                        style={{
-                          width: parseInt(book.count) > 100 ? "2.8em" : "2.1em",
-                        }}
-                        id="nm-inp"
-                        className="input-wrap"
-                        value={book.count ? book.count : 1}
-                        onChange={(e) =>
-                          itemCounterHandler("input", book.id, e)
-                        }
-                      />
-                      <div
-                        onClick={() => {
-                          itemCounterHandler("add", book.id);
-                        }}
-                      >
-                        &#8679;
-                      </div>
-                    </div>
-                  </span>
-                </div>
-                <span className={classes.Divider}></span>
-              </Aux>
-            ))}
+          <div className={classes.CartItemBody}>
+            <Aux>
+              <CartItems
+                remove={(e, bookId) => removeFromCartHandler(e, bookId)}
+                count={(option, bookId, e) => itemCounterHandler(option, bookId, e)}
+                cart={cartItems}
+              />
+            </Aux>
           </div>
         </div>
       )}

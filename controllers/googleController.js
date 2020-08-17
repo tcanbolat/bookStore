@@ -40,7 +40,8 @@ module.exports = {
     Promise.all(bookRequests)
       .then(() => {
         const uniqueResults = allResults.filter((item, index) => {
-          return allResults.indexOf(item.id) !== index.id;
+          console.log(allResults.indexOf(index))
+          return allResults.indexOf(item) === index;
         });
         axios
           .get("https://bookstore-709eb.firebaseio.com/cart.json")
@@ -63,7 +64,6 @@ module.exports = {
               uniqueResults[bookIndex] = book;
             }
             res.json(uniqueResults);
-            console.log(uniqueResults);
           });
       })
       .catch((err) => {

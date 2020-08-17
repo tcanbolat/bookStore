@@ -23,3 +23,9 @@
 .Description p {
   margin-top: 0px;
 }
+
+.NoStock {
+  margin-bottom: 0px;
+  opacity: 55%;
+  cursor: not-allowed;
+}

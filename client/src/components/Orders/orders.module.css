@@ -4,44 +4,31 @@
   position: -webkit-sticky;
   position: sticky;
   top: 100px;
-  border-radius: 0.1rem;
-  border-left: 3px solid #2f9fe0;
-  border-top: 1px solid rgba(34,36,38,.15);
-  border-bottom: 1px solid rgba(34,36,38,.15);
-  flex: 30%;
+  border-radius: 0.2rem;
+  border: 5px solid #2f9fe0;
+  box-shadow: 0px 0px 7px #154764;
+  flex: 40%;
   padding-left: 10px;
-}
-
-.Orders em {
-  color: #2f9fe0;
-  font-weight: 700;
+  text-align: center;
 }
 
 .Orders h4 {
-  border-bottom: 4px solid #2f9fe0;
+  border-bottom: 4px solid #b85240;
   width: fit-content;
 }
 
-.LineBreak {
-  max-width: 40%;
-  margin: 0px;
-  margin-bottom: 20px;
-  border: 0.1px solid red;
+.OrderName {
+  border-bottom: 2px solid #b85240;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 @media (max-width: 720px) {
   .Orders {
     height: fit-content;
     position: static;
-    flex: 40%;
-    border-left: none;
+    flex: 50%;
     text-align: center;
     margin: 0 auto;
-  }
-
-  h4, .LineBreak {
-    margin: 0 auto;
-    margin-bottom: 20px;
-    font-size: 30px;
   }
 }

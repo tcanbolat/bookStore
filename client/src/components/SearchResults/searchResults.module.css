@@ -45,42 +45,6 @@
   width: fit-content;
 }
 
-.Button {
-  background: url("../../assets/images/shoppingCart.svg") no-repeat;
-  padding: 7px 7px 7px 30px;
-}
-
-.Button, .InCart {
-  border: 2px solid #2f9fe0;
-  border-radius: 0.3rem;
-  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); */
-  font-size: 11px;
-}
-
-.Button:hover {
-  color: white;
-  background-color: #b85240;
-  border: 2px solid #b85240;
-}
-
-.Button:active {
-  outline-style: none;
-  box-shadow: 2px 2px 15px rgb(70, 69, 69) inset;
-  background-color: #b64d3b
-}
-
-.Button:focus {
-  outline-style: none;
-}
-
-.InCart {
-  padding: 7px;
-  color: green;
-  font-size: 12px;
-  border-color: #b64d3b;
-  box-shadow: 2px 2px 5px rgb(70, 69, 69) inset !important;
-}
-
 .CardTitle {
   margin: 1px;
 }

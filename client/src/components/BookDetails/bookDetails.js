@@ -6,8 +6,8 @@ import Button from "../UI/Button/Button";
 import Rater from "../UI/Rater/Rater";
 
 const bookDetails = (props) => {
-
   const { bookDetails } = props;
+  console.log(bookDetails);
   return (
     <Aux>
       <div className={classes.TopRow}>
@@ -36,16 +36,20 @@ const bookDetails = (props) => {
           </h3>
           <Rater rating={bookDetails.volumeInfo.averageRating} />
           {bookDetails.saleInfo.saleability === "FOR_SALE" ? (
-            <Button btnType="Success" clicked={props.addToCart}>
-              add to cart
-            </Button>
+            bookDetails.inCart ? (
+              <Button disabled btnType="InCart">
+                &#10004; <strong> {bookDetails.count}</strong> in cart
+              </Button>
+            ) : (
+              <Button btnType="CartBtn" clicked={(e) => props.addToCart(e, bookDetails)}>
+                add to cart
+              </Button>
+            )
           ) : (
-            <Button disabled btnType="Danger">
-              Out of Stock
-            </Button>
+            <h3 className={classes.NoStock}>Out of Stock</h3>
           )}
-          <Button btnType="Danger" clicked={props.toggle}>
-            Cancel
+          <Button btnType="Close" clicked={props.toggle}>
+            Close
           </Button>
         </div>
       </div>

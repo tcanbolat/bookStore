@@ -1,9 +1,8 @@
 import React from "react";
-import {withRouter} from "react-router-dom"
-
 import classes from "./searchResults.module.css";
 import PlaceHolder from "../UI/PlaceHolder/placeHolder";
 import Spinner from "../UI/Spinner/Spinner";
+import Button from "../UI/Button/Button";
 import MainBody from "../MainBody/MainBody";
 
 const SearchResults = (props) => {
@@ -32,16 +31,16 @@ const SearchResults = (props) => {
                 ${book.saleInfo.listPrice.amount}
               </h4>
               {book.inCart ? (
-                <button disabled className={classes.InCart}>
-                &#10004; <strong> {book.count}</strong> in cart    
-                </button>
+                <Button disabled btnType="InCart">
+                  &#10004; <strong> {book.count}</strong> in cart
+                </Button>
               ) : (
-                <button
-                  className={classes.Button}
-                  onClick={(e) => props.addToCart(e, book)}
+                <Button
+                  btnType="CartBtn"
+                  clicked={(e) => props.addToCart(e, book)}
                 >
                   ADD TO CART
-                </button>
+                </Button>
               )}
             </div>
           ) : (
@@ -65,4 +64,4 @@ const SearchResults = (props) => {
   );
 };
 
-export default withRouter(SearchResults);
+export default SearchResults;

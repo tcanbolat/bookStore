@@ -13,12 +13,11 @@ import MainBody from "../../components/MainBody/MainBody";
 const BookSearch = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [modal, setModal] = useState(false);
-  const [clickedBook, setClickedBook] = useState({});
+  const [clickedBook, setClickedBook] = useState();
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(20);
   const [filtered, setFiltered] = useState([]);
-  const [addingToCart, setAddingToCart] = useState(false);
 
   const handleFormSubmit = (value) => {
     setLoading(true);
@@ -97,7 +96,7 @@ const BookSearch = () => {
 
   const addToCartHandler = (e, book) => {
     e.preventDefault();
-    setAddingToCart(true);
+    e.target.innerHTML = "Adding...";
     API.addToCart(book)
       .then((res) => {
         console.log(res);
@@ -111,30 +110,24 @@ const BookSearch = () => {
         added["inCart"] = true;
         const newresults = [...filtered];
         newresults[bookIndex] = added;
-        setFiltered(newresults);
-        setAddingToCart(false);
+        setSearchResult(newresults);
+        setClickedBook(added);
       })
       .catch((err) => {
         console.log(err);
-        setAddingToCart(false);
       });
   };
-
-  let booksDetails = null;
-  if (modal) {
-    booksDetails = (
-      <BookDetails
-        bookDetails={clickedBook}
-        toggle={modalToggleHandler}
-        addToCart={() => addToCartHandler(clickedBook)}
-      />
-    );
-  }
 
   return (
     <MainBody>
       <Modal clicked={modalToggleHandler} show={modal}>
-        {booksDetails}
+        {clickedBook ? (
+          <BookDetails
+            bookDetails={clickedBook}
+            toggle={modalToggleHandler}
+            addToCart={(e, book) => addToCartHandler(e, book)}
+          />
+        ) : null}
       </Modal>
       <div className={classes.SearchArea}>
         <SearchForm submitForm={handleFormSubmit} />
@@ -154,7 +147,6 @@ const BookSearch = () => {
         />
       }
       <SearchResults
-        adding={addingToCart}
         addToCart={(e, book) => addToCartHandler(e, book)}
         loading={loading}
         toggleModal={handleBookModal}

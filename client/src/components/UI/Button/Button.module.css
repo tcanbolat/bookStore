@@ -1,29 +1,46 @@
-.Button {
-    background-color: transparent;
-    border: none;
-    color: white;
-    outline: none;
-    cursor: pointer;
-    font: inherit;
-    padding: 10px;
-    margin: 10px;
-    font-weight: bold;
+.CartBtn {
+  background: url("../../../assets/images/shoppingCart.svg") no-repeat;
+  padding: 7px 7px 7px 30px;
+  border: 2px solid #2f9fe0;
 }
 
-.Button:first-of-type {
-    margin-left: 0;
-    padding-left: 0;
+.CartBtn,
+.Close,
+.InCart,
+.Remove {
+  border-radius: 0.3rem;
+  font-size: 11px;
 }
 
-.Success {
-    color: #5C9210;
+.CartBtn:hover,
+.Close:hover {
+  color: white;
+  background-color: #b85240;
+  border: 2px solid #b85240;
+  font-weight: 700;
 }
 
-.Danger {
-    color: #944317;
+.CartBtn:active,
+.Close:active {
+  outline-style: none;
+  box-shadow: 2px 2px 15px rgb(70, 69, 69) inset;
+  background-color: #b64d3b;
 }
 
-.Button:disabled {
-    color: #ccc;
-    cursor: not-allowed;
+.CartBtn:focus, .InCart:focus, .Close:focus {
+  outline-style: none;
+}
+
+.Close {
+  padding: 7px 7px 7px 7px;
+  border: 2px solid #b85240;
+  background-color: white;
+}
+
+.InCart {
+  padding: 7px;
+  color: green;
+  font-size: 12px;
+  border-color: #b64d3b;
+  box-shadow: 2px 2px 5px rgb(70, 69, 69) inset !important;
 }
