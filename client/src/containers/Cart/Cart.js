@@ -11,16 +11,28 @@ import CartItems from "../../components/CartItem/CartItem";
 
 const Cart = React.memo(() => {
   const [cartItems, setCartItems] = useState([]);
+  // loading state that displays a Spinner component when true.
+  // this is what displays when the page first loads, until data is recieved.
   const [loading, setLoading] = useState(true);
+  // remove state that sets the Discard button to false when an delete post is sent
+  // this prevents multiple delete requests of the same kind if the user repeadidly clicks delete.
+  const [remove, setRemoving] = useState(false);
+  // creating a current reference to the item count value;
+  // the reference is being set in the itemCounterHandler();
+  const countRef = useRef(null);
+  // seting a state to the item count value;
   const [itemCount, setItemCount] = useState();
   const [itemId, setItemId] = useState(null);
-  const countRef = useRef(null);
 
+  // if no items are saved to the cart database then this place holder will render;
+  // the check for this is in the return body at the bottom.
   const emptyCart = <PlaceHolder message="Your cart is empty" />;
 
+  // an effect that will fetch saved items from the cart database.
   useEffect(() => {
     API.getCart()
       .then((res) => {
+        // setting the loading state to false to remove spinner
         setLoading(false);
         console.log("REPSONSE: ", res.data);
         setCartItems(res.data);
@@ -31,11 +43,16 @@ const Cart = React.memo(() => {
       });
   }, []);
 
+  // another effect that uses a setTimeout(); to control the frequency of API calls.
   useEffect(() => {
+    // timeout is set to 500 miliseconds.
     setTimeout(() => {
-      console.log(countRef);
-      console.log(itemCount);
+      // console.log(countRef);
+      // console.log(itemCount);
+      // ItemCount is the count state 500 miliseconds ago and the countRef.current is the current count value.
       if (itemCount === countRef.current) {
+        // only when the previous state and current value are the same then the API call is sent.
+        // this reduces the number of times a post request is made to the server by checking if the input value has stopped changing.
         API.updateItemCount({
           id: itemId,
           count: itemCount,
@@ -48,28 +65,37 @@ const Cart = React.memo(() => {
           });
       }
     }, 500);
+    // this effeect triggers whenever itemCOunt and itemID state changes.
   }, [itemCount, itemId]);
 
   const removeFromCartHandler = (e, id) => {
     e.preventDefault();
+    // disabling the Discard button.
+    setRemoving(true);
     e.target.innerHTML = "&#8226;	&#8226;	&#8226;	&#8226;";
-    setLoading(true);
+    // delete request sending the clicked items id.
     API.deleteBook(id)
       .then((res) => {
+        // on success, removing the deleteed item from the list.
         const updateResults = cartItems.filter((item) => item.id !== id);
         setCartItems(updateResults);
-        setLoading(false);
-        console.log(updateResults);
+        // setting the discard button back to normal.
+        setRemoving(false);
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false);
+        setRemoving(false);
       });
   };
 
-  console.log("STATE: ", cartItems);
-
+  // this controls the input as well as the up and down buttons values.
+  // the values are coming from the CartItems component.
+  // option comes from the buttons to add or subtract.
+  // id comes from the buttons and input
+  // e comes only from the input to capture the value.
+  // that why e is set at the end because the buttons dont use it.
   const itemCounterHandler = (option, id, e) => {
+    // using the id sent, it finds the clicked item.
     const cartIndex = cartItems.findIndex((b) => {
       return b.id === id;
     });
@@ -79,16 +105,23 @@ const Cart = React.memo(() => {
 
     switch (option) {
       case "add":
+        // if the option comes as add; add 1.
         item.count = parseInt(item.count) + 1;
+        // returing the smae number if item count is over 550.
         if (item.count > 550) {
           return item;
         }
+        // setting CountRef to this value.
         countRef.current = item.count;
+        // setting the count state to this value.
         setItemCount(item.count);
+        // seting the itemID state to this item.
         setItemId(id);
         break;
       case "subtract":
+        // if the option comes as subtract; subtract 1.
         item.count = parseInt(item.count) - 1;
+        // stopping the item count from set to less than 1.
         if (item.count < 1) {
           return item;
         }
@@ -97,7 +130,9 @@ const Cart = React.memo(() => {
         setItemId(id);
         break;
       default:
+        // the default is connected to the input, because the input doesn't send back an option.
         e.preventDefault();
+        // making sure the count value being set is between 1 -550.
         if (e.target.value >= 1 && e.target.value <= 550) {
           item.count = e.target.value;
           countRef.current = item.count;
@@ -105,7 +140,7 @@ const Cart = React.memo(() => {
           setItemId(id);
         }
     }
-
+    // updating the state of the items value.
     const updatedCartItems = [...cartItems];
     updatedCartItems[cartIndex] = item;
     setCartItems(updatedCartItems);
@@ -129,9 +164,11 @@ const Cart = React.memo(() => {
             <Aux>
               <CartItems
                 remove={(e, bookId) => removeFromCartHandler(e, bookId)}
-                count={(option, bookId, e) => itemCounterHandler(option, bookId, e)}
+                count={(option, bookId, e) =>
+                  itemCounterHandler(option, bookId, e)
+                }
                 cart={cartItems}
-                loading={loading}
+                removing={remove}
               />
             </Aux>
           </div>

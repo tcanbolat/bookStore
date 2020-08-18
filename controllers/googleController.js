@@ -24,27 +24,27 @@ module.exports = {
               // each loop, the StartIndex goes up by 40.
               startIndex[i]
           )
-          .then((results) => {
+          .then((resultSet) => {
             // filtering out any results that dont contian the following values.
-            return results.data.items.filter(
-              (result) =>
-                result.volumeInfo.title &&
-                result.volumeInfo.infoLink &&
-                result.volumeInfo.authors &&
-                result.volumeInfo.description &&
-                result.volumeInfo.imageLinks &&
-                result.volumeInfo.imageLinks.thumbnail
+            return resultSet.data.items.filter(
+              (setOfBooks) =>
+              setOfBooks.volumeInfo.title &&
+              setOfBooks.volumeInfo.infoLink &&
+              setOfBooks.volumeInfo.authors &&
+              setOfBooks.volumeInfo.description &&
+              setOfBooks.volumeInfo.imageLinks &&
+              setOfBooks.volumeInfo.imageLinks.thumbnail
             );
           })
-          .then((booksArray) => {
+          .then((booksArraySet) => {
             // maping results into the allResults array for each loop
             // maping first before pushing to avoid nested arrays.
-            booksArray.map((results) => {
-              allResults.push(results);
+            booksArraySet.map((object) => {
+              allResults.push(object);
             });
           })
           .catch((err) => {
-            res.json(err);
+            res.err;
           })
       );
     }
@@ -62,9 +62,9 @@ module.exports = {
         // ****************************************************************
         // **** HELPER FUNCTION TO CHECK IF THE uniqueResults map WORKED OR NOT. ****
         // **** IF IT WORKED, uniqueResults.length & uniqueValues.size should be the same.
-        // const uniqueValues = new Set(uniqueResults.map((o) => o.id));
         // console.log("ALL RESULTS ARRAY: " + allResults.length);
         // console.log("UNIQUE RESULTS ARRAY: " + uniqueResults.length);
+        // const uniqueValues = new Set(uniqueResults.map((o) => o.id));
         // console.log("UNIQUE CHECK: " + uniqueValues.size);
         // ****************************************************************
 
@@ -99,7 +99,7 @@ module.exports = {
           });
       })
       .catch((err) => {
-        res.json(err);
+        res.err;
       });
   },
 };

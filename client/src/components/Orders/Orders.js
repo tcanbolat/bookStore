@@ -3,8 +3,6 @@ import React from "react";
 import classes from "./orders.module.css";
 import Button from "../UI/Button/Button";
 
-import Aux from "../../hoc/Auxillary/Auxillary";
-
 const Orders = ({ cart }) => {
   const priceArray = [];
   console.log(cart);

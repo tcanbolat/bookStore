@@ -11,16 +11,29 @@ import Filters from "./Filters/Filters";
 import MainBody from "../../components/MainBody/MainBody";
 
 const BookSearch = () => {
+  // the results from the search API are stored here.
   const [searchResult, setSearchResult] = useState([]);
+  // modal toggle
   const [modal, setModal] = useState(false);
+  // saving a state of the object that was clicked on.
   const [clickedBook, setClickedBook] = useState();
+  // loading state to set Spinner or not
   const [loading, setLoading] = useState(false);
+  // adding state to disable buttons.
   const [adding, setAdding] = useState(false);
+  // state that stores the current page number
+  // used in the Pagination component and useEffect();
   const [currentPage, setCurrentPage] = useState(1);
+  // state that detirmens how many results per page; currently set at 20.
   const [postsPerPage] = useState(20);
+  // state of the searchResults that has been filtered
   const [filtered, setFiltered] = useState([]);
+  // the state of the sliced page is determined by the currentPage sate and filtered state.
+  // this is what ultimately gets passed down to searchResults component to get rendered.
   const [slicedPage, setSlicedPage] = useState(0);
 
+  // this effect controls slicedPage state
+  // it listens to see if searchResults or filtered states have changed.
   useEffect(() => {
     // setting up and slicing out a page from the results
     const indexOfLastPost = currentPage * postsPerPage;
@@ -77,29 +90,29 @@ const BookSearch = () => {
   // wrapped around a useCallback(); that returns a memoized version to the Filter component in order to prevent an infinite loop.
   const bookFilterHandler = useCallback(
     (filterValue) => {
+      const books = searchResult;
       switch (filterValue) {
         case "all":
-          setFiltered(searchResult);
+          // setting the filtered state to the searchResults state.
+          setFiltered(books);
           break;
         case "available":
+          // setting the filtered state by filtering out any items that do have a not for sale value.
           setFiltered(
-            searchResult.filter(
-              (book) => book.saleInfo.saleability !== "NOT_FOR_SALE"
-            )
+            books.filter((book) => book.saleInfo.saleability !== "NOT_FOR_SALE")
           );
-          setCurrentPage(1);
           break;
         case "na":
+          // setting the filtered state by filtering out any items that do not have a not for sale value.
           setFiltered(
-            searchResult.filter(
-              (book) => book.saleInfo.saleability !== "FOR_SALE"
-            )
+            books.filter((book) => book.saleInfo.saleability === "NOT_FOR_SALE")
           );
-          setCurrentPage(1);
           break;
         default:
           return null;
       }
+      // setting the page back to one after the switch statement so that it applies to all cases.
+      setCurrentPage(1);
     },
     [searchResult]
   );
@@ -108,11 +121,10 @@ const BookSearch = () => {
     e.preventDefault();
     setAdding(true);
     e.target.innerHTML = "Adding...";
-  // API call to save a book to the database.
+    // API call to save a book to the database.
     API.addToCart(book)
       .then(() => {
-        // on success, instead of making another api call to the server it updates the item from the current state.
-        // since we got a successfull response from the server it can change the state accordingly.
+        // on success, it updates the item from the current state.
         const bookIndex = filtered.findIndex((b) => {
           return b.id === book.id;
         });
@@ -126,7 +138,7 @@ const BookSearch = () => {
         // setting the results with the updated object.
         setAdding(false);
         setClickedBook(added);
-        setSearchResult(newresults);
+        setFiltered(newresults);
       })
       .catch((err) => {
         console.log(err);
