@@ -38,14 +38,13 @@ const BookSearch = () => {
     // setting up and slicing out a page from the results
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    if (filtered.length <= 0 && searchResult.length <= 0) {
-      // checking for results to slice or not.
+
+    if (filtered.length <= 0) {
+      // if no filters have been set, slice from the searchResults state.
       setSlicedPage(searchResult.slice(indexOfFirstPost, indexOfLastPost));
     }
-    if (filtered.length > 0) {
-      // checking whether to slice based on any filters or not.
-      setSlicedPage(filtered.slice(indexOfFirstPost, indexOfLastPost));
-    }
+    // if so, slice it from the filtered state.
+    setSlicedPage(filtered.slice(indexOfFirstPost, indexOfLastPost));
   }, [filtered, searchResult, postsPerPage, currentPage]);
 
   const handleFormSubmit = (value) => {

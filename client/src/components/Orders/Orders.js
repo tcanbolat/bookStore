@@ -3,21 +3,24 @@ import React from "react";
 import classes from "./orders.module.css";
 import Button from "../UI/Button/Button";
 
-const Orders = ({ cart }) => {
+const Orders = (props) => {
   const priceArray = [];
-  console.log(cart);
-  cart.forEach((item) => {
+
+  props.cart.forEach((item) => {
     priceArray.push(item.saleInfo.listPrice.amount * item.count);
   });
 
   const subTotal = priceArray.reduce((a, b) => a + b, 0).toFixed(2);
-  console.log(priceArray);
+
+
+  // const body; 
+
   return (
     <div className={classes.Orders}>
       <h1 className={classes.TotalHeader}>sub total: ${subTotal}</h1>
-      <hr/>
+      <hr />
       <div className={classes.ItemList}>
-        {cart.map((item) => {
+        {props.cart.map((item) => {
           return (
             <div key={item.id} className={classes.OrderName}>
               <p>
@@ -27,11 +30,11 @@ const Orders = ({ cart }) => {
           );
         })}
       </div>
-      <hr/>
+      <hr />
       <div className={classes.CheckoutBtn}>
-        <Button btnType="Order">
-          <span className={classes.TotalBtn}>${subTotal} </span>CHECK OUT
-        </Button>
+          <Button clicked={() => props.checkout(subTotal)} btnType="Order">
+            <span className={classes.TotalBtn}>${subTotal} </span>CHECK OUT
+          </Button>
       </div>
     </div>
   );

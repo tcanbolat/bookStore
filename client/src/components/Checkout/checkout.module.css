@@ -1,0 +1,31 @@
+.CheckoutBody {
+  border: 2px solid #2f9fe0;
+  border-radius: 0.2rem;
+  box-shadow: 0px 3px 3px 3px #888888;
+  width: 50%;
+  margin: auto;
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+.CheckoutForm {
+    padding: 0px 50px;
+}
+
+@media (max-width: 750px) {
+  .CheckoutBody {
+    width: 80%;
+  }
+  .CheckoutForm {
+    padding: 0px 10px;  
+}
+}
+
+@media (max-width: 500px) {
+  .CheckoutBody {
+    width: 100%;
+  }
+  .CheckoutForm {
+    padding: 0px
+}
+}

@@ -9,7 +9,7 @@ import Aux from "../../hoc/Auxillary/Auxillary";
 import MainBody from "../../components/MainBody/MainBody";
 import CartItems from "../../components/CartItem/CartItem";
 
-const Cart = React.memo(() => {
+const Cart = (props) => {
   const [cartItems, setCartItems] = useState([]);
   // loading state that displays a Spinner component when true.
   // this is what displays when the page first loads, until data is recieved.
@@ -146,6 +146,16 @@ const Cart = React.memo(() => {
     setCartItems(updatedCartItems);
   };
 
+  const checkoutHandler = (subTotal) => {
+    props.history.push({
+      pathname: "/checkout",
+      state: {
+        total: subTotal,
+        itemInfo: cartItems,
+      },
+    });
+  };
+
   return (
     <MainBody>
       {loading ? (
@@ -159,7 +169,7 @@ const Cart = React.memo(() => {
         </div>
       ) : (
         <div className={classes.Cart}>
-          <Orders cart={cartItems} />
+          <Orders cart={cartItems} checkout={checkoutHandler} />
           <div className={classes.CartItemBody}>
             <Aux>
               <CartItems
@@ -176,6 +186,6 @@ const Cart = React.memo(() => {
       )}
     </MainBody>
   );
-});
+};
 
 export default Cart;

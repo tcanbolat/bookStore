@@ -26,6 +26,7 @@
   outline-style: none;
   box-shadow: 2px 2px 15px rgb(70, 69, 69) inset;
   background-color: #b64d3b;
+  border: 2px solid #b64d3b;
 }
 
 .CartBtn:focus,
@@ -36,6 +37,7 @@
 }
 
 .Close {
+    margin-left: 10px;
   padding: 7px 7px 7px 7px;
   border: 2px solid #b85240;
   background-color: white;
@@ -65,4 +67,8 @@
 .Order:active {
   box-shadow: 2px 2px 15px rgb(70, 69, 69) inset;
   font-size: 0.99em;
+}
+
+.Order:disabled {
+    cursor: not-allowed;
 }
