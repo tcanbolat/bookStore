@@ -29,4 +29,7 @@ export default {
       }),
     });
   },
+  checkoutCart: (checkout) => {
+    return axios.put("api/checkout", checkout);
+  },
 };

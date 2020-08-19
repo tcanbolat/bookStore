@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import classes from "./checkout.module.css";
 import checkValidity from "../../utils/validity/checkValidity";
 import updateObject from "../../utils/updateObject/updateObject";
-import Input from "../UI/Input/Input";
-import MainBody from "../MainBody/MainBody";
-import Button from "../UI/Button/Button";
-import PlaceHolder from "../UI/PlaceHolder/placeHolder";
+import Input from "../../components/UI/Input/Input";
+import MainBody from "../../components/MainBody/MainBody";
+import Button from "../../components/UI/Button/Button";
+import PlaceHolder from "../../components/UI/PlaceHolder/placeHolder";
+import API from "../../utils/API";
 
 const Checkout = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
@@ -96,7 +97,22 @@ const Checkout = (props) => {
 
   const checkoutHandler = (e) => {
     e.preventDefault();
-    console.log("CHECKED OUT")
+    const formData = {};
+    for (let formElementIdentifier in orderForm) {
+      formData[formElementIdentifier] = orderForm[formElementIdentifier].value;
+    }
+    API.checkoutCart({
+      id: props.location.state.itemIds,
+      total: props.location.state.total,
+      shippingInfo: formData,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    props.history.goBack();
   };
 
   const inputChangedHandler = (event, inputIdentifier) => {
@@ -154,17 +170,17 @@ const Checkout = (props) => {
     </form>
   );
 
-  const numberWithCommas = (x) => {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-}
-
+  const addComas = (number) => {
+    return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  };
+  console.log(props);
   return (
     <MainBody>
       {props.location.state === undefined ? (
         <PlaceHolder message="Checkout from your Cart." />
       ) : (
         <div className={classes.CheckoutBody}>
-          <h1>Your total is ${numberWithCommas(props.location.state.total)}</h1>
+          <h1>Your total is ${addComas(props.location.state.total)}</h1>
           {form}
         </div>
       )}

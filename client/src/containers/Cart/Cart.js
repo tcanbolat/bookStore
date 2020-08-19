@@ -147,11 +147,15 @@ const Cart = (props) => {
   };
 
   const checkoutHandler = (subTotal) => {
+    // filtering the cartItems state and bring back only the ones that are marked as inCart.
+    const inCart = cartItems.filter((item) => item.inCart === true);
+    const inCartIds = inCart.map(item => item.id);
+    // redirecting the subTotal and item id's that are marked as inCart to the checkout page. 
     props.history.push({
       pathname: "/checkout",
       state: {
         total: subTotal,
-        itemInfo: cartItems,
+        itemIds: inCartIds,
       },
     });
   };

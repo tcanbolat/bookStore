@@ -138,6 +138,7 @@ const BookSearch = () => {
         setAdding(false);
         setClickedBook(added);
         setFiltered(newresults);
+        console.log(newresults);
       })
       .catch((err) => {
         console.log(err);

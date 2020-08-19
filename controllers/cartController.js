@@ -18,17 +18,11 @@ module.exports = {
       });
   },
   delete: (req, res) => {
-    console.log(req.params.id);
     axios
       .delete(
         "https://bookstore-709eb.firebaseio.com/cart/" +
           req.params.id +
           ".json",
-        // {
-        //   headers: {
-        //     type: "application/json",
-        //   },
-        // }
       )
       .then(() => {
         res.json();
@@ -39,8 +33,8 @@ module.exports = {
       });
   },
   addToCart: (req, res) => {
-    console.log(req.body);
     req.body["count"] = 1;
+    req.body["inCart"] = true;
     axios
       .post("https://bookstore-709eb.firebaseio.com/cart.json", req.body)
       .then(() => {
@@ -52,7 +46,6 @@ module.exports = {
       });
   },
   updateItemCount: (req, res) => {
-    console.log(req.body.count);
     axios
       .put(
         "https://bookstore-709eb.firebaseio.com/cart/" +

@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 
 import Layout from "./components/Layout/layout";
+import Spinner from "./components/UI/Spinner/Spinner";
 import BookSearch from "./containers/BookSearch/bookSearch";
 
 // React lazy loading.
@@ -11,7 +12,7 @@ const Cart = React.lazy(() => {
 });
 
 const Checkout = React.lazy(() => {
-  return import("./components/Checkout/Checkout");
+  return import("./containers/Checkout/Checkout");
 })
 
 const App = (props) => {
@@ -27,7 +28,7 @@ const App = (props) => {
   return (
     <div>
       <Layout>
-        <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
+        <Suspense fallback={<Spinner />}>{routes}</Suspense>
       </Layout>
     </div>
   );
