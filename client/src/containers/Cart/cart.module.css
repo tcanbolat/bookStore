@@ -9,3 +9,9 @@
   flex: 60%;
 }
 
+.cartTotal {
+  border-bottom: 1px solid rgba(128, 128, 128, 0.452);
+  width: fit-content;
+  padding: 0px;
+  margin-top: 0px;
+}

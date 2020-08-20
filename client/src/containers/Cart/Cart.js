@@ -175,7 +175,10 @@ const Cart = (props) => {
           <Orders cart={cartItems} checkout={checkoutHandler} />
           <div className={classes.CartItemBody}>
             <Aux>
-              <span onClick={() => {}}>ORDER HISTORY</span>
+              <p className={classes.cartTotal}>{cartItems.length} items in cart</p>
+              {/* <span onClick={() => props.history.push(`/orderhistory`)}>
+                ORDER HISTORY
+              </span> */}
               <CartItems
                 remove={(e, bookId) => removeFromCartHandler(e, bookId)}
                 count={(option, bookId, e) =>

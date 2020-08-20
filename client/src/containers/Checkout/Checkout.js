@@ -112,7 +112,7 @@ const Checkout = (props) => {
       .catch((err) => {
         console.log(err);
       });
-    props.history.goBack();
+    props.history.push("/orderhistory");
   };
 
   const inputChangedHandler = (event, inputIdentifier) => {
