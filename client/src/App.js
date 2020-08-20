@@ -15,11 +15,16 @@ const Checkout = React.lazy(() => {
   return import("./containers/Checkout/Checkout");
 })
 
+const OrderHistory = React.lazy(() => {
+  return import("./containers/OrderHistory/OrderHistory");
+})
+
 const App = (props) => {
   let routes = (
     <Switch>
       <Route exact path="/cart" render={(props) => <Cart {...props} />} />
       <Route exact path="/checkout" render={(props) => <Checkout {...props} />} />
+      <Route exact path="/orderhistory" render={(props) => <OrderHistory {...props}/>} />
       <Route exact path="/" component={BookSearch} />
       <Redirect to="/" />
     </Switch>

@@ -8,6 +8,7 @@ import Orders from "../../components/Orders/Orders";
 import Aux from "../../hoc/Auxillary/Auxillary";
 import MainBody from "../../components/MainBody/MainBody";
 import CartItems from "../../components/CartItem/CartItem";
+import { Link } from "react-router-dom";
 
 const Cart = (props) => {
   const [cartItems, setCartItems] = useState([]);
@@ -23,10 +24,6 @@ const Cart = (props) => {
   // seting a state to the item count value;
   const [itemCount, setItemCount] = useState();
   const [itemId, setItemId] = useState(null);
-
-  // if no items are saved to the cart database then this place holder will render;
-  // the check for this is in the return body at the bottom.
-  const emptyCart = <PlaceHolder message="Your cart is empty" />;
 
   // an effect that will fetch saved items from the cart database.
   useEffect(() => {
@@ -93,7 +90,6 @@ const Cart = (props) => {
   // option comes from the buttons to add or subtract.
   // id comes from the buttons and input
   // e comes only from the input to capture the value.
-  // that why e is set at the end because the buttons dont use it.
   const itemCounterHandler = (option, id, e) => {
     // using the id sent, it finds the clicked item.
     const cartIndex = cartItems.findIndex((b) => {
@@ -149,8 +145,8 @@ const Cart = (props) => {
   const checkoutHandler = (subTotal) => {
     // filtering the cartItems state and bring back only the ones that are marked as inCart.
     const inCart = cartItems.filter((item) => item.inCart === true);
-    const inCartIds = inCart.map(item => item.id);
-    // redirecting the subTotal and item id's that are marked as inCart to the checkout page. 
+    const inCartIds = inCart.map((item) => item.id);
+    // redirecting the subTotal and item id's that are marked as inCart to the checkout page.
     props.history.push({
       pathname: "/checkout",
       state: {
@@ -160,22 +156,26 @@ const Cart = (props) => {
     });
   };
 
+  // if no items are saved to the cart database then this place holder will render;
+  const emptyCart = (
+    <PlaceHolder message="Your cart is empty">
+      <Link to="./">Go Home.</Link>
+      <Link to="orderhistory">Go to order history</Link>
+    </PlaceHolder>
+  );
+
   return (
     <MainBody>
       {loading ? (
         <Spinner />
       ) : cartItems.length <= 0 ? (
-        <div
-          style={{ width: "80%", margin: "0 auto" }}
-          className={classes.Cart}
-        >
-          {emptyCart}
-        </div>
+        emptyCart
       ) : (
         <div className={classes.Cart}>
           <Orders cart={cartItems} checkout={checkoutHandler} />
           <div className={classes.CartItemBody}>
             <Aux>
+              <span onClick={() => {}}>ORDER HISTORY</span>
               <CartItems
                 remove={(e, bookId) => removeFromCartHandler(e, bookId)}
                 count={(option, bookId, e) =>

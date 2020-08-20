@@ -30,6 +30,9 @@ export default {
     });
   },
   checkoutCart: (checkout) => {
-    return axios.put("api/checkout", checkout);
+    return axios.patch("api/checkout", checkout);
+  },
+  getOrders: () => {
+    return axios.get("api/orderhistory");
   },
 };

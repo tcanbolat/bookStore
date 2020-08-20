@@ -1,14 +1,24 @@
-.Container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 200px;
+.placeHolderBody {
+  margin: 0 auto !important;
+  padding: 25px;
+  text-align: center;
+  width: 80%;
   background-color: rgba(148, 156, 163, 0.15);
   opacity: 90%;
   border-radius: 0.18rem;
 }
 
-.Container img {
-  width: 40px;
+.placeHolderBody img {
+  width: 45px;
+}
+
+.placeHolderBody a {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: #2f9fe0;
+}
+
+.placeHolderBody a:hover {
+  color: #b85240;
 }

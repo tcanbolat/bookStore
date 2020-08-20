@@ -3,7 +3,9 @@ const axios = require("axios");
 module.exports = {
   getAll: (req, res) => {
     axios
-      .get("https://bookstore-709eb.firebaseio.com/cart.json")
+      .get(
+        'https://bookstore-709eb.firebaseio.com/cart.json?orderBy="inCart"&equalTo=true'
+      )
       .then((response) => {
         const fetchedData = [];
         for (let key in response.data) {
@@ -13,16 +15,14 @@ module.exports = {
         res.json(fetchedData);
       })
       .catch((err) => {
-        res.json(err);
+        res.err;
         console.log(err);
       });
   },
   delete: (req, res) => {
     axios
       .delete(
-        "https://bookstore-709eb.firebaseio.com/cart/" +
-          req.params.id +
-          ".json",
+        "https://bookstore-709eb.firebaseio.com/cart/" + req.params.id + ".json"
       )
       .then(() => {
         res.json();
@@ -51,7 +51,7 @@ module.exports = {
         "https://bookstore-709eb.firebaseio.com/cart/" +
           req.body.id +
           "/count.json",
-        JSON.stringify(req.body.count) 
+        JSON.stringify(req.body.count)
       )
       .then(() => {
         res.json();
