@@ -44,6 +44,7 @@ module.exports = {
           shipping: shippingInfo,
           total: orderTotal,
           orderId: email + "-" + time,
+          orderTime: time
         }),
       ])
       .then((response) => {

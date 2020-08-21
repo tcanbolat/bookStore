@@ -11,7 +11,7 @@ module.exports = {
           // pushing objects into an array
           fetchedData.push({ ...response.data[key], id: key });
         }
-        res.json(fetchedData);
+        res.json(fetchedData.reverse());
       })
       .catch((err) => {
         console.log(err);

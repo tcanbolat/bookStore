@@ -4,6 +4,7 @@ import API from "../../utils/API";
 import classes from "./orderHistory.module.css";
 import MainBody from "../../components/MainBody/MainBody";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import ShipmentTracker from "../../components/ShipmentTracker/shipmentTracker";
 
 const OrderHistory = (props) => {
   const [loading, setLoading] = useState(true);
@@ -36,10 +37,18 @@ const OrderHistory = (props) => {
             <em>Country:</em> {order.shipping.country}
             <br />
           </div>
-          <div className={classes.OrderHistoryTotal}><em>Paid:</em> ${order.total}</div>
+          <div className={classes.OrderHistoryTotal}>
+            <em>Paid:</em> ${order.total}
+          </div>
         </div>
         <div className={classes.OrderShipment}>
-        <em>Shipping option:</em> {order.shipping.deliveryMethod}
+          <em>Shipping option:</em> {order.shipping.deliveryMethod}
+          <div>
+            <ShipmentTracker
+              orderTime={order.orderTime}
+              method={order.shipping.deliveryMethod}
+            />
+          </div>
         </div>
       </div>
     );
