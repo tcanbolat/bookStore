@@ -2,7 +2,6 @@ const axios = require("axios");
 
 module.exports = {
   getOrderHistory: (req, res) => {
-    console.log(req);
     axios
       .get("https://bookstore-709eb.firebaseio.com/orders.json")
       .then((response) => {

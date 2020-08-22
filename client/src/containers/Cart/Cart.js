@@ -9,7 +9,6 @@ import Aux from "../../hoc/Auxillary/Auxillary";
 import MainBody from "../../components/MainBody/MainBody";
 import CartItems from "../../components/CartItem/CartItem";
 import { Link } from "react-router-dom";
-import OrderHistory from "../OrderHistory/OrderHistory";
 
 const Cart = (props) => {
   const [cartItems, setCartItems] = useState([]);

@@ -1,0 +1,28 @@
+.TrackingBody {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.TrackingBlock {
+  margin: 25px;
+}
+
+.TrackingBody svg {
+  width: 100px;
+  height: 100px;
+}
+
+.OrderStatus {
+  flex-basis: 100%;
+  text-align: center;
+  color: #b85240;
+}
+
+.OrderStatus h3 {
+  padding: 0px;
+  margin: 0px;
+}
+
+

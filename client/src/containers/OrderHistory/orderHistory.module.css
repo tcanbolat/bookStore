@@ -11,7 +11,7 @@
   font-size: 17px;
   line-height: 35px;
   display: flex;
-  width: 55%;
+  width: fit-content;
   border: 2px solid #2f9fe0;
   border-radius: 0.2rem;
   padding: 15px;
@@ -35,7 +35,8 @@
 }
 
 .OrderShipment {
-  padding-left: 20px;
+  padding-left: 30px;
+  max-width: 600px;  
 }
 
 .OrderHistoryBody em {
@@ -44,30 +45,6 @@
   color: black;
 }
 
-@media (max-width: 1050px) {
-    .OrderHistoryBody {
-      /* margin: 0 auto; */
-      /* margin-bottom: 20px; */
-      width: 65%;
-    }
-  }
-
-  @media (max-width: 830px) {
-    .OrderHistoryBody {
-      /* margin: 0 auto; */
-      /* margin-bottom: 20px; */
-      width: 80%;
-    }
-  }
-
-  @media (max-width: 675px) {
-    .OrderHistoryBody {
-      /* margin: 0 auto; */
-      /* margin-bottom: 20px; */
-      width: 90%;
-    }
-  }
-
 @media (max-width: 500px) {
   .OrderHistory {
     margin: auto;
@@ -75,8 +52,15 @@
   }
 
   .OrderHistoryBody {
-    margin: 0 auto;
-    margin-bottom: 20px;
-    width: 100%;
+      justify-content: center;
   }
+
+  .OrderShipment {
+      padding-top: 25px;
+  }
+
+  .OrderHistoryTotal {
+      width: 100%;
+  }
+
 }
