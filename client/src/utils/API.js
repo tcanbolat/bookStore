@@ -35,4 +35,7 @@ export default {
   getOrders: () => {
     return axios.get("api/orderhistory");
   },
+  deleteOrder: (id) => {
+    return axios.delete("api/orderhistory/" + id)
+  }
 };

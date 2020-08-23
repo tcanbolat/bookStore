@@ -31,4 +31,50 @@ module.exports = {
         res.err;
       });
   },
+  deleteOrder: (req, res) => {
+    axios
+      .all([
+        axios.get(
+          `https://bookstore-709eb.firebaseio.com/cart.json?orderBy="orderID"&equalTo="` +
+            req.params.id +
+            `"`
+        ),
+        axios.get(
+          `https://bookstore-709eb.firebaseio.com/orders.json?orderBy="orderId"&equalTo="` +
+            req.params.id +
+            `"`
+        ),
+      ])
+
+      .then((responses) => {
+        const orderItems = Object.keys(responses[0].data);
+        const orderKey = Object.keys(responses[1].data);
+        const deleteArray = [];
+        for (let i = 0; i < orderItems.length; i++) {
+          deleteArray.push(
+            axios.delete(
+              "https://bookstore-709eb.firebaseio.com/cart/" +
+                orderItems[i] +
+                ".json"
+            )
+          );
+        }
+
+        axios.all([
+          deleteArray,
+          axios.delete(
+            "https://bookstore-709eb.firebaseio.com/orders/" +
+              orderKey +
+              ".json"
+          ),
+        ]);
+      })
+      .then((response) => {
+        res.json(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.err;
+      });
+  },
 };

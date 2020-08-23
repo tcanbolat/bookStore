@@ -48,7 +48,7 @@ module.exports = {
         }),
       ])
       .then((response) => {
-        res.json(response);
+        res.json(response.data);
       })
       .catch((err) => {
         console.log(err);

@@ -21,12 +21,24 @@ const OrderHistory = (props) => {
       });
   }, []);
 
+  const removeOrderHandler = (id) => {
+    API.deleteOrder(id)
+      .then((res) => {
+        console.log(res);
+        const deleteOrder = orders.filter((order) => order.orderId !== id);
+        setOrders(deleteOrder);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(id);
+  };
+
   const orderList = orders.map((order) => {
     return (
       <div key={order.id} className={classes.OrderHistoryBody}>
         <div>
           <em>To:</em> {order.shipping.name}
-          {/* {order.shipping.email}<br /> */}
           <div className={classes.AddressTitle}>
             <em>Address:</em>
           </div>
@@ -38,15 +50,21 @@ const OrderHistory = (props) => {
             <br />
           </div>
           <div className={classes.OrderHistoryTotal}>
-            <em>Paid:</em> ${order.total}
+            <em>Paid:</em> $<strong>{order.total}</strong>
           </div>
         </div>
         <div className={classes.OrderShipment}>
-          <em>Shipping option:</em> {order.shipping.deliveryMethod}
-            <ShipmentTracker
-              orderTime={order.orderTime}
-              method={order.shipping.deliveryMethod}
-            />
+          <div className={classes.Method}>
+            <em>Shipping option:</em>
+            <div>{order.shipping.deliveryMethod}</div>
+            <span className={classes.OrderDetails}>order details...</span>
+          </div>
+          <ShipmentTracker
+            id={order.orderId}
+            orderTime={order.orderTime}
+            method={order.shipping.deliveryMethod}
+            remove={removeOrderHandler}
+          />
         </div>
       </div>
     );
