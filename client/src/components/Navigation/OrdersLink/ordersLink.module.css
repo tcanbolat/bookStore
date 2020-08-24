@@ -1,0 +1,13 @@
+.OrdersLink {
+    display: inline-block;
+    color: #2f9fe0;
+    text-decoration: none;
+    padding-right: 10px;
+    font-size: large;
+    font-weight: 700;    
+  }
+  
+  .OrdersLink:hover {
+    color: #b85240;
+    text-decoration: underline;
+  }

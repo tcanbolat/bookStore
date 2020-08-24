@@ -14,12 +14,13 @@ const ShipmentTracker = (props) => {
   const orderTime = props.orderTime;
   const currentTime = new Date().getTime();
   const readyToShip = orderTime + 86400000;
-  const priorityMail = orderTime + 172800000;
-  const regularMail = orderTime + 259200000;
+  const priorityMail = readyToShip + 86400000;
+  const regularMail = readyToShip + 172800000;
 
   const shippedEstimate = readyToShip - currentTime;
   const regularDeliveryEstimate = regularMail - currentTime;
   const priorityMailEstimate = priorityMail - currentTime;
+  console.log(regularDeliveryEstimate);
 
   useEffect(() => {
     if (currentTime > readyToShip) {
@@ -51,8 +52,8 @@ const ShipmentTracker = (props) => {
     readyToShip,
   ]);
 
-  function msToHours(duration) {
-    let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+  function msToHours(timeDifference) {
+    let hours = Math.floor(timeDifference / 3600 / 1000);
     hours = hours < 10 ? "0" + hours : hours;
     return hours + " ";
   }
@@ -85,12 +86,16 @@ const ShipmentTracker = (props) => {
         <div className={classes.Tdds}>
           {currentTime < readyToShip ? (
             msToHours(shippedEstimate) + " hours until ready to ship"
-          ) : props.method === "fastest" && currentTime < priorityMail ? (
-            msToHours(priorityMailEstimate) + "hours unitl delivery"
           ) : props.method === "cheapest" && currentTime < regularMail ? (
             msToHours(regularDeliveryEstimate) + "hours until delivery"
+          ) : props.method === "fastest" && currentTime < priorityMail ? (
+            msToHours(priorityMailEstimate) + "hours unitl delivery"
           ) : (
-            <Button clicked={() => props.remove(props.id)} btnType="Close">
+            <Button
+              disabled={props.deleting}
+              clicked={() => props.remove(props.id)}
+              btnType="Close"
+            >
               Delete Order
             </Button>
           )}

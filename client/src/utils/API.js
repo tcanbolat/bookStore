@@ -30,12 +30,15 @@ export default {
     });
   },
   checkoutCart: (checkout) => {
-    return axios.patch("api/checkout", checkout);
+    return axios.patch("/api/checkout", checkout);
   },
   getOrders: () => {
-    return axios.get("api/orderhistory");
+    return axios.get("/api/orderhistory");
   },
   deleteOrder: (id) => {
-    return axios.delete("api/orderhistory/" + id)
-  }
+    return axios.delete("/api/orderhistory/" + id);
+  },
+  getByOrderId: (orderId) => {
+    return axios.get("/api/orderdetails", { params: { orderId } });
+  },
 };

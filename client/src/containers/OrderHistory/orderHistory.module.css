@@ -6,16 +6,24 @@
 }
 
 .OrderHistoryBody {
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: nowrap; */
+  margin: 0 auto;
   font-size: 17px;
   line-height: 35px;
-  display: flex;
-  width: fit-content;
+  width: 75%;
   border: 2px solid #2f9fe0;
   border-radius: 0.2rem;
   padding: 15px;
   margin-bottom: 25px;
+}
+
+.shippingInfo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: auto;
+
 }
 
 .Address {
@@ -32,11 +40,11 @@
 
 .OrderHistoryTotal {
   border-bottom: 2px solid #b85240;
+  height: fit-content;
 }
 
 .OrderShipment {
-  padding-left: 30px;
-  max-width: 600px;
+  /* width: 100%; */
 }
 
 .OrderHistoryBody em {
@@ -68,14 +76,16 @@
   border-bottom: 2px solid #2f9fe0;
 }
 
+@media (max-width: 610px) {
+  .Method {
+display: block;
+  }
+}
+
 @media (max-width: 500px) {
   .OrderHistory {
     margin: auto;
     margin-bottom: 30px;
-  }
-
-  .OrderHistoryBody {
-    justify-content: center;
   }
 
   .OrderShipment {

@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 
 import classes from "./bookSearch.module.css";
+import Aux from "../../hoc/Auxillary/Auxillary";
 import API from "../../utils/API";
 import SearchForm from "./SearchForm/SearchForm";
 import SearchResults from "../../components/SearchResults/searchReults";
@@ -9,6 +10,7 @@ import BookDetails from "../../components/BookDetails/bookDetails";
 import Pagination from "../../components/Pagination/Pagination";
 import Filters from "./Filters/Filters";
 import MainBody from "../../components/MainBody/MainBody";
+import OrderLink from "../../components/Navigation/OrdersLink/OrderLink";
 
 const BookSearch = () => {
   // the results from the search API are stored here.
@@ -146,42 +148,45 @@ const BookSearch = () => {
   };
 
   return (
-    <MainBody>
-      <Modal clicked={modalToggleHandler} show={modal}>
-        {clickedBook ? (
-          <BookDetails
-            bookDetails={clickedBook}
-            toggle={modalToggleHandler}
-            addToCart={(e, book) => addToCartHandler(e, book)}
-            adding={adding}
+    <Aux>
+      <OrderLink />
+      <MainBody>
+        <Modal clicked={modalToggleHandler} show={modal}>
+          {clickedBook ? (
+            <BookDetails
+              bookDetails={clickedBook}
+              toggle={modalToggleHandler}
+              addToCart={(e, book) => addToCartHandler(e, book)}
+              adding={adding}
+            />
+          ) : null}
+        </Modal>
+        <div className={classes.SearchArea}>
+          <SearchForm submitForm={handleFormSubmit} />
+          <Filters loading={loading} filterBy={bookFilterHandler} />
+        </div>
+        {
+          <Pagination
+            loading={loading}
+            postsPerPage={postsPerPage}
+            totalPosts={
+              filtered.length === undefined
+                ? searchResult.length
+                : filtered.length
+            }
+            currentPage={currentPage}
+            paginate={paginate}
           />
-        ) : null}
-      </Modal>
-      <div className={classes.SearchArea}>
-        <SearchForm submitForm={handleFormSubmit} />
-        <Filters loading={loading} filterBy={bookFilterHandler} />
-      </div>
-      {
-        <Pagination
+        }
+        <SearchResults
+          addToCart={(e, book) => addToCartHandler(e, book)}
           loading={loading}
-          postsPerPage={postsPerPage}
-          totalPosts={
-            filtered.length === undefined
-              ? searchResult.length
-              : filtered.length
-          }
-          currentPage={currentPage}
-          paginate={paginate}
+          toggleModal={handleBookModal}
+          bookResults={slicedPage}
+          adding={adding}
         />
-      }
-      <SearchResults
-        addToCart={(e, book) => addToCartHandler(e, book)}
-        loading={loading}
-        toggleModal={handleBookModal}
-        bookResults={slicedPage}
-        adding={adding}
-      />
-    </MainBody>
+      </MainBody>
+    </Aux>
   );
 };
 
