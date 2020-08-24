@@ -11,6 +11,7 @@ const OrderHistory = (props) => {
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   const [deleting, setDeleting] = useState(false);
+  const [orderDetails, setOrderDetails] = useState([]);
 
   useEffect(() => {
     API.getOrders()
@@ -40,15 +41,38 @@ const OrderHistory = (props) => {
   };
 
   const orderDetailsHandler = (orderId) => {
-    console.log(orderId);
-    API.getByOrderId(orderId)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const orderIndex = orders.findIndex((order) => {
+      return order.orderId === orderId;
+    });
+    const order = {
+      ...orders[orderIndex],
+    };
+    if (order.showDetails) {
+      order.showDetails = false;
+      const newresults = [...orders];
+      newresults[orderIndex] = order;
+      setOrders(newresults);
+    } else {
+      orders.map((a) => (a.showDetails = false));
+      order["showDetails"] = true;
+      console.log(order);
+      API.getByOrderId(orderId)
+        .then((res) => {
+          console.log(res.data);
+          const newresults = [...orders];
+          newresults[orderIndex] = order;
+          setOrders(newresults);
+          setOrderDetails(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
+
+  const details = orderDetails.map((orderItem) => {
+    return <div>{orderItem.id}</div>;
+  });
 
   const orderList = orders.map((order) => {
     return (
@@ -81,16 +105,21 @@ const OrderHistory = (props) => {
               onClick={() => orderDetailsHandler(order.orderId)}
               className={classes.OrderDetails}
             >
-              order details...
+              {order.showDetails ? "Tracking..." : "order details..."}
             </span>
           </div>
-          <ShipmentTracker
-            id={order.orderId}
-            orderTime={order.orderTime}
-            method={order.shipping.deliveryMethod}
-            remove={removeOrderHandler}
-            deleting={deleting}
-          />
+          {order.showDetails ? (
+            details
+          ) : (
+            <ShipmentTracker
+              vmentTracker
+              id={order.orderId}
+              orderTime={order.orderTime}
+              method={order.shipping.deliveryMethod}
+              remove={removeOrderHandler}
+              deleting={deleting}
+            />
+          )}
         </div>
       </div>
     );

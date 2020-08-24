@@ -10,7 +10,12 @@ module.exports = {
           `"`
       )
       .then((response) => {
-        res.json(response.data);
+        const fetchedData = [];
+        for (let key in response.data) {
+          // pushing objects into an array
+          fetchedData.push({ ...response.data[key], id: key });
+        }
+        res.json(fetchedData);
       })
       .catch((err) => {
         console.log(err);

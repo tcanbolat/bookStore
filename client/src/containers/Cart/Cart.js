@@ -9,6 +9,7 @@ import Aux from "../../hoc/Auxillary/Auxillary";
 import MainBody from "../../components/MainBody/MainBody";
 import CartItems from "../../components/CartItem/CartItem";
 import { Link } from "react-router-dom";
+import OrderLink from "../../components/Navigation/OrdersLink/OrderLink";
 
 const Cart = (props) => {
   const [cartItems, setCartItems] = useState([]);
@@ -165,33 +166,38 @@ const Cart = (props) => {
   );
 
   return (
-    <MainBody>
-      {loading ? (
-        <Spinner />
-      ) : cartItems.length <= 0 ? (
-        emptyCart
-      ) : (
-        <div className={classes.Cart}>
-          <Orders cart={cartItems} checkout={checkoutHandler} />
-          <div className={classes.CartItemBody}>
-            <Aux>
-              <p className={classes.cartTotal}>{cartItems.length} items in cart</p>
-              {/* <span onClick={() => props.history.push(`/orderhistory`)}>
+    <Aux>
+      <OrderLink />
+      <MainBody>
+        {loading ? (
+          <Spinner />
+        ) : cartItems.length <= 0 ? (
+          emptyCart
+        ) : (
+          <div className={classes.Cart}>
+            <Orders cart={cartItems} checkout={checkoutHandler} />
+            <div className={classes.CartItemBody}>
+              <Aux>
+                <p className={classes.cartTotal}>
+                  {cartItems.length} items in cart
+                </p>
+                {/* <span onClick={() => props.history.push(`/orderhistory`)}>
                 ORDER HISTORY
               </span> */}
-              <CartItems
-                remove={(e, bookId) => removeFromCartHandler(e, bookId)}
-                count={(option, bookId, e) =>
-                  itemCounterHandler(option, bookId, e)
-                }
-                cart={cartItems}
-                removing={remove}
-              />
-            </Aux>
+                <CartItems
+                  remove={(e, bookId) => removeFromCartHandler(e, bookId)}
+                  count={(option, bookId, e) =>
+                    itemCounterHandler(option, bookId, e)
+                  }
+                  cart={cartItems}
+                  removing={remove}
+                />
+              </Aux>
+            </div>
           </div>
-        </div>
-      )}
-    </MainBody>
+        )}
+      </MainBody>
+    </Aux>
   );
 };
 
