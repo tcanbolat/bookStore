@@ -47,21 +47,28 @@ const OrderHistory = (props) => {
     const order = {
       ...orders[orderIndex],
     };
+    order.loading = true;
+    const setloading = [...orders];
+    setloading[orderIndex] = order;
+    setOrders(setloading);
+
     if (order.showDetails) {
       order.showDetails = false;
-      const newresults = [...orders];
-      newresults[orderIndex] = order;
-      setOrders(newresults);
+      order.loading = false;
+      const toggleTracker = [...orders];
+      toggleTracker[orderIndex] = order;
+      setOrders(toggleTracker);
     } else {
-      orders.map((a) => (a.showDetails = false));
-      order["showDetails"] = true;
       console.log(order);
       API.getByOrderId(orderId)
         .then((res) => {
+          orders.map((a) => (a.showDetails = false));
+          order["showDetails"] = true;
+          order.loading = false;
           console.log(res.data);
-          const newresults = [...orders];
-          newresults[orderIndex] = order;
-          setOrders(newresults);
+          const toggleDetail = [...orders];
+          toggleDetail[orderIndex] = order;
+          setOrders(toggleDetail);
           setOrderDetails(res.data);
         })
         .catch((err) => {
@@ -71,8 +78,15 @@ const OrderHistory = (props) => {
   };
 
   const details = orderDetails.map((orderItem) => {
-    return <div>{orderItem.id}</div>;
+    return (
+      <div className={classes.OrderItems}>
+        <div className={classes.ItemTitle}>{orderItem.volumeInfo.title}</div>
+        <div className={classes.ItemPrice}>${orderItem.saleInfo.listPrice.amount} <em>X</em> {orderItem.count}</div> 
+      </div>
+    );
   });
+
+  console.log(orderDetails);
 
   const orderList = orders.map((order) => {
     return (
@@ -108,11 +122,12 @@ const OrderHistory = (props) => {
               {order.showDetails ? "Tracking..." : "order details..."}
             </span>
           </div>
-          {order.showDetails ? (
+          {order.loading === true ? (
+            <Spinner />
+          ) : order.showDetails ? (
             details
           ) : (
             <ShipmentTracker
-              vmentTracker
               id={order.orderId}
               orderTime={order.orderTime}
               method={order.shipping.deliveryMethod}

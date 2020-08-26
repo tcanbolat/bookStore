@@ -6,8 +6,6 @@
 }
 
 .OrderHistoryBody {
-  /* display: flex;
-  flex-wrap: nowrap; */
   margin: 0 auto;
   font-size: 17px;
   line-height: 35px;
@@ -23,7 +21,6 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: auto;
-
 }
 
 .Address {
@@ -43,8 +40,10 @@
   height: fit-content;
 }
 
-.OrderShipment {
-  /* width: 100%; */
+.OrderItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .OrderHistoryBody em {
@@ -76,9 +75,24 @@
   border-bottom: 2px solid #2f9fe0;
 }
 
+.ItemPrice,
+.ItemTitle {
+  padding: 5px;
+  margin: 5px;
+  width: fit-content;
+}
+
+.ItemTitle {
+  border-bottom: 2px solid #b85240;
+}
+
+.ItemPrice {
+  border-bottom: 2px solid #2f9fe0;
+}
+
 @media (max-width: 610px) {
   .Method {
-display: block;
+    display: block;
   }
 }
 

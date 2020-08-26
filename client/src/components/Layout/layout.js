@@ -5,7 +5,6 @@ import Aux from "../../hoc/Auxillary/Auxillary";
 import Toolbar from "../../components/Navigation/Toolbar/toolbar";
 import SideDrawer from "../Navigation/SideDrawer/sideDrawer";
 import BackToTop from "../UI/BackToTop/BackToTop";
-import { Link } from "react-router-dom";
 
 const Layout = (props) => {
   const [toggleSideDrawer, setToggleSideDrawer] = useState(false);
