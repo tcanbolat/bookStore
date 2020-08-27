@@ -7,7 +7,6 @@ import Rater from "../UI/Rater/Rater";
 
 const bookDetails = (props) => {
   const { bookDetails } = props;
-  console.log(bookDetails);
   return (
     <Aux>
       <div className={classes.TopRow}>

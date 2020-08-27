@@ -20,7 +20,6 @@ const ShipmentTracker = (props) => {
   const shippedEstimate = readyToShip - currentTime;
   const regularDeliveryEstimate = regularMail - currentTime;
   const priorityMailEstimate = priorityMail - currentTime;
-  console.log(regularDeliveryEstimate);
 
   useEffect(() => {
     if (currentTime > readyToShip) {

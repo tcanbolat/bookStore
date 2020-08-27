@@ -12,8 +12,6 @@ const Filters = ({ filterBy, loading }) => {
     filterBy(selectedInput);
   }, [filterBy, selectedInput, loading]);
 
-  console.log("[FILTERS.JS] REDNDERED.");
-
   return (
     <div className={classes.Container}>
       <h3>Filter</h3>

@@ -32,12 +32,10 @@ const Cart = (props) => {
       .then((res) => {
         // setting the loading state to false to remove spinner
         setLoading(false);
-        console.log("REPSONSE: ", res);
         setCartItems(res.data);
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error);
       });
   }, []);
 
@@ -56,10 +54,8 @@ const Cart = (props) => {
           count: itemCount,
         })
           .then((res) => {
-            console.log(res);
           })
           .catch((err) => {
-            console.log(err);
           });
       }
     }, 500);
@@ -96,7 +92,6 @@ const Cart = (props) => {
         setCartItems(updateResults);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 

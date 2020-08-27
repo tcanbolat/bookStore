@@ -22,25 +22,20 @@ const OrderHistory = (props) => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
       });
   }, []);
 
   const removeOrderHandler = (id) => {
-    console.log("clicked");
     setDeleting(true);
     API.deleteOrder(id)
       .then((res) => {
-        console.log(res);
         const deleteOrder = orders.filter((order) => order.orderId !== id);
         setOrders(deleteOrder);
         setDeleting(false);
       })
       .catch((err) => {
-        console.log(err);
       });
-    console.log(id);
   };
 
   const orderDetailsHandler = (orderId) => {
@@ -62,20 +57,17 @@ const OrderHistory = (props) => {
       toggleTracker[orderIndex] = order;
       setOrders(toggleTracker);
     } else {
-      console.log(order);
       API.getByOrderId(orderId)
         .then((res) => {
           orders.map((a) => (a.showDetails = false));
           order["showDetails"] = true;
           order.loading = false;
-          console.log(res.data);
           const toggleDetail = [...orders];
           toggleDetail[orderIndex] = order;
           setOrders(toggleDetail);
           setOrderDetails(res.data);
         })
         .catch((err) => {
-          console.log(err);
         });
     }
   };
@@ -89,7 +81,6 @@ const OrderHistory = (props) => {
     );
   });
 
-  console.log(orderDetails);
 
   const orderList = orders.map((order) => {
     return (
@@ -143,7 +134,6 @@ const OrderHistory = (props) => {
     );
   });
 
-  console.log(orders);
 
   return (
     <MainBody>

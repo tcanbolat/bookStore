@@ -11,7 +11,6 @@ const Rater = (props) => {
   }
 
   const totalStars = Array(Math.round(rating)).fill("star");
-  console.log(totalStars);
 
   stars = totalStars.map((star, index) => {
     return (

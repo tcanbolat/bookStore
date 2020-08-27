@@ -28,12 +28,12 @@ module.exports = {
             // filtering out any results that dont contian the following values.
             return resultSet.data.items.filter(
               (setOfBooks) =>
-              setOfBooks.volumeInfo.title &&
-              setOfBooks.volumeInfo.infoLink &&
-              setOfBooks.volumeInfo.authors &&
-              setOfBooks.volumeInfo.description &&
-              setOfBooks.volumeInfo.imageLinks &&
-              setOfBooks.volumeInfo.imageLinks.thumbnail
+                setOfBooks.volumeInfo.title &&
+                setOfBooks.volumeInfo.infoLink &&
+                setOfBooks.volumeInfo.authors &&
+                setOfBooks.volumeInfo.description &&
+                setOfBooks.volumeInfo.imageLinks &&
+                setOfBooks.volumeInfo.imageLinks.thumbnail
             );
           })
           .then((booksArraySet) => {
@@ -77,11 +77,11 @@ module.exports = {
             for (let key in response.data) {
               cartArray.push({ ...response.data[key] });
             }
-            // for however many object are in the caryArray...
+            // for however many object are in the caryArray...  
             for (let i = 0; i < cartArray.length; i++) {
               // check it with uniqueResults and return any that match, by the same id.
               const bookIndex = uniqueResults.findIndex((b) => {
-                return b.id === cartArray[i].id;
+                return b.id === cartArray[i].id && cartArray[i].inCart === true;
               });
               // defining the pulled object
               const book = {

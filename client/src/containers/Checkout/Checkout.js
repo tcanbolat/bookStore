@@ -112,7 +112,6 @@ const Checkout = (props) => {
         props.history.push("/orderhistory");
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -174,7 +173,6 @@ const Checkout = (props) => {
   const addComas = (number) => {
     return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   };
-  console.log(props);
   return (
     <MainBody>
       {props.location.state === undefined ? (

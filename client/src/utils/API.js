@@ -14,20 +14,7 @@ export default {
     return axios.post("/api/cart", book);
   },
   updateItemCount: (update) => {
-    // cancel token to cancel subsequent requests, coming from "/api/cart"
-    // the setTimout(); in Cart.js already catches all them, but this is here to use as well.
-    let cancel;
-    const CancelToken = axios.CancelToken;
-    if (cancel !== undefined) {
-      cancel({
-        message: "subsequent request cancelled",
-      });
-    }
-    return axios.put("/api/cart", update, {
-      cancelToken: new CancelToken(function executor(c) {
-        cancel = c;
-      }),
-    });
+    return axios.put("/api/cart", update);
   },
   checkoutCart: (checkout) => {
     return axios.patch("/api/checkout", checkout);

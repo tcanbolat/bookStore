@@ -35,7 +35,6 @@ const BookSearch = () => {
   const [slicedPage, setSlicedPage] = useState(0);
   const [filter, setFilter] = useState("all");
 
-  console.log(filtered);
   // this effect controls slicedPage state
   // it listens to see if searchResults or filtered states have changed.
   useEffect(() => {
@@ -87,7 +86,6 @@ const BookSearch = () => {
         setCurrentPage(1); // re-setting the pagination back to the first page on every new search.
       })
       .catch((error) => {
-        console.log(error);
         setLoading(false); // on Error, setting the loading to false as well to remove Spinner.
       });
   };
@@ -156,7 +154,6 @@ const BookSearch = () => {
         // setFiltered(newresults);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 

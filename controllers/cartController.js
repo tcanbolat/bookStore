@@ -15,7 +15,6 @@ module.exports = {
         res.json(fetchedData);
       })
       .catch((error) => {
-        console.log(error)
         res.status(error.response.status).json('Error: ' + error.data);
       });
   },

@@ -25,7 +25,6 @@ module.exports = {
       {}
     );
     const batch = { ...cartUpdate, ...orderedUpdate, ...setOrderID };
-    console.log(batch);
     // the batch variable will look like this...
     //    {
     //   "uniqueId1/inCart": "false",
