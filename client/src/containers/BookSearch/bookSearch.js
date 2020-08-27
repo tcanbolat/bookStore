@@ -21,8 +21,6 @@ const BookSearch = () => {
   const [clickedBook, setClickedBook] = useState();
   // loading state to set Spinner or not
   const [loading, setLoading] = useState(false);
-  // adding state to disable buttons.
-  const [adding, setAdding] = useState(false);
   // state that stores the current page number
   // used in the Pagination component and useEffect();
   const [currentPage, setCurrentPage] = useState(1);
@@ -129,24 +127,28 @@ const BookSearch = () => {
 
   const addToCartHandler = (e, book) => {
     e.preventDefault();
-    setAdding(true);
-    e.target.innerHTML = "Adding...";
+    // setAdding(true);
+    const bookIndex = searchResult.findIndex((b) => {
+      return b.id === book.id;
+    });
+    const added = {
+      ...searchResult[bookIndex],
+    };
+    added["adding"] = true;
+    const newresults = [...searchResult];
+    newresults[bookIndex] = added;
+    setClickedBook(added);
+    setSearchResult(newresults);
     // API call to save a book to the database.
     API.addToCart(book)
       .then(() => {
         // on success, it updates the item from the current state.
-        const bookIndex = searchResult.findIndex((b) => {
-          return b.id === book.id;
-        });
-        const added = {
-          ...searchResult[bookIndex],
-        };
         added["count"] = 1;
         added["inCart"] = true;
+        added["adding"] = false;
         const newresults = [...searchResult];
         newresults[bookIndex] = added;
         // setting the results with the updated object.
-        setAdding(false);
         setClickedBook(added);
         setSearchResult(newresults);
         // setFiltered(newresults);
@@ -166,7 +168,6 @@ const BookSearch = () => {
               bookDetails={clickedBook}
               toggle={modalToggleHandler}
               addToCart={(e, book) => addToCartHandler(e, book)}
-              adding={adding}
             />
           ) : null}
         </Modal>
@@ -192,7 +193,6 @@ const BookSearch = () => {
           loading={loading}
           toggleModal={handleBookModal}
           bookResults={slicedPage}
-          adding={adding}
         />
       </MainBody>
     </Aux>

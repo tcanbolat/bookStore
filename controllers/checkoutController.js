@@ -33,7 +33,7 @@ module.exports = {
     //   "uniqueId1/orderID": "id",
     //   "uniqueId2/inCart": "false",
     //   "uniqueId2/ordered": "true",
-    //   "uniqueId1/orderID": "id",
+    //   "uniqueId2/orderID": "id",
     //   }
     // the "uniqueId/inCart : /ordered" becomes the url for each uniqueId and updates them all to true or false.
     // grouping them all in an object will update values at multiple paths with one axios call.
@@ -50,9 +50,8 @@ module.exports = {
       .then((response) => {
         res.json(response.data);
       })
-      .catch((err) => {
-        console.log(err);
-        res.err;
+      .catch((error) => {
+        res.status(400).json("Error: " + error);
       });
   },
 };

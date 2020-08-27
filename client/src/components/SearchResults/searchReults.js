@@ -36,11 +36,15 @@ const SearchResults = (props) => {
                 </Button>
               ) : (
                 <Button
-                  disabled={props.adding}
+                  disabled={book.adding}
                   btnType="CartBtn"
                   clicked={(e) => props.addToCart(e, book)}
                 >
-                  ADD TO CART
+                  {book.adding ? (
+                    <div>&#8226; &#8226; &#8226; &#8226;</div>
+                  ) : (
+                    "ADD TO CART"
+                  )}
                 </Button>
               )}
             </div>

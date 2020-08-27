@@ -8,10 +8,6 @@
   margin-top: 1.5rem;
 }
 
-.Details {
-    width: fit-content;
-}
-
 .Description {
   border: 1px solid grey;
   margin-top: 10px;
@@ -24,8 +20,14 @@
   margin-top: 0px;
 }
 
-.NoStock {
-  margin-bottom: 0px;
-  opacity: 55%;
-  cursor: not-allowed;
+@media (max-width: 500px) {
+  .TopRow {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+  .TopRow img {
+    padding: 0px;
+    margin: 0px;
+  }
 }

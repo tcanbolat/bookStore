@@ -27,6 +27,21 @@
 }
 
 .Logo {
+  display: flex;
+  justify-content: center;
   height: 15%;
   margin-bottom: 45px;
+}
+
+.Section {
+  border-top: 2px solid #b85240;
+  padding: 20px;
+  margin-top: 25px;
+}
+
+.OrdersLink {
+  text-align: center;
+  margin-top: 5px;
+  color: #2f9fe0;
+  font-size: 25px;
 }

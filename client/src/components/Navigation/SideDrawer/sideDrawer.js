@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import classes from "./sideDrawer.module.css";
 import Logo from "../../Logo/logo";
@@ -19,9 +20,14 @@ const sideDrawer = (props) => {
         <div className={classes.Logo}>
           <Logo />
         </div>
+        <div className={classes.Section}></div>
         <nav>
           <NavigationItems />
         </nav>
+        <div className={classes.Section}></div>
+        <Link style={{textDecoration: "none"}} to="/orderhistory">
+          <div className={classes.OrdersLink}>Orders</div>
+        </Link>
       </div>
     </Aux>
   );

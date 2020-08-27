@@ -10,12 +10,10 @@ const Layout = (props) => {
   const [toggleSideDrawer, setToggleSideDrawer] = useState(false);
 
   const sideDrawerClosedHandler = () => {
-    console.log("layout.js : sideDrawerClosedHandler() hit");
     setToggleSideDrawer(false);
   };
 
   const sideDrawerToggleHandler = () => {
-    console.log("layout.js : sideDrawerToggleHandler() hit");
     setToggleSideDrawer(!toggleSideDrawer);
   };
 

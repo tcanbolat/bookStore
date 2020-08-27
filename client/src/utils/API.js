@@ -20,7 +20,7 @@ export default {
     const CancelToken = axios.CancelToken;
     if (cancel !== undefined) {
       cancel({
-        message: "subsequent request canclled",
+        message: "subsequent request cancelled",
       });
     }
     return axios.put("/api/cart", update, {

@@ -41,12 +41,12 @@ const bookDetails = (props) => {
                 &#10004; <strong> {bookDetails.count}</strong> in cart
               </Button>
             ) : (
-              <Button disabled={props.adding} btnType="CartBtn" clicked={(e) => props.addToCart(e, bookDetails)}>
-                add to cart
+              <Button disabled={bookDetails.adding} btnType="CartBtn" clicked={(e) => props.addToCart(e, bookDetails)}>
+                {bookDetails.adding ? <div>&#8226; &#8226; &#8226; &#8226;</div> : "add to cart"}
               </Button>
             )
           ) : (
-            <h3 className={classes.NoStock}>Out of Stock</h3>
+            <Button btnType="NoStock">Out of Stock</Button>
           )}
           <Button btnType="Close" clicked={props.toggle}>
             Close

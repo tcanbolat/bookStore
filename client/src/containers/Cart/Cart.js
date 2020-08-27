@@ -10,15 +10,13 @@ import MainBody from "../../components/MainBody/MainBody";
 import CartItems from "../../components/CartItem/CartItem";
 import { Link } from "react-router-dom";
 import OrderLink from "../../components/Navigation/OrdersLink/OrderLink";
+// import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 const Cart = (props) => {
   const [cartItems, setCartItems] = useState([]);
   // loading state that displays a Spinner component when true.
   // this is what displays when the page first loads, until data is recieved.
   const [loading, setLoading] = useState(true);
-  // remove state that sets the Discard button to false when an delete post is sent
-  // this prevents multiple delete requests of the same kind if the user repeadidly clicks delete.
-  const [remove, setRemoving] = useState(false);
   // creating a current reference to the item count value;
   // the reference is being set in the itemCounterHandler();
   const countRef = useRef(null);
@@ -32,12 +30,12 @@ const Cart = (props) => {
       .then((res) => {
         // setting the loading state to false to remove spinner
         setLoading(false);
-        console.log("REPSONSE: ", res.data);
+        console.log("REPSONSE: ", res);
         setCartItems(res.data);
       })
-      .catch((err) => {
+      .catch((error) => {
         setLoading(false);
-        console.log(err);
+        console.log(error);
       });
   }, []);
 
@@ -68,21 +66,31 @@ const Cart = (props) => {
 
   const removeFromCartHandler = (e, id) => {
     e.preventDefault();
-    // disabling the Discard button.
-    setRemoving(true);
-    e.target.innerHTML = "&#8226;	&#8226;	&#8226;	&#8226;";
+    // creating a index of the item in hte  cartItems state.
+    const cartIndex = cartItems.findIndex(cartItem => {
+      return cartItem.id === id;
+    });
+    // creating a clone of the indexed item.
+    const item = {
+      ...cartItems[cartIndex]
+    };
+    // setting the items removing key to true.
+    item.removing = true;
+    // creating a clone of the cartItems state.
+    const removing = [...cartItems];
+    // adding the changed item back into the cloned list.
+    removing[cartIndex] = item;
+    // setting the cartItems state to the cloned state.
+    setCartItems(removing);
     // delete request sending the clicked items id.
     API.deleteBook(id)
       .then((res) => {
         // on success, removing the deleteed item from the list.
         const updateResults = cartItems.filter((item) => item.id !== id);
         setCartItems(updateResults);
-        // setting the discard button back to normal.
-        setRemoving(false);
       })
       .catch((err) => {
         console.log(err);
-        setRemoving(false);
       });
   };
 
@@ -181,16 +189,12 @@ const Cart = (props) => {
                 <p className={classes.cartTotal}>
                   {cartItems.length} items in cart
                 </p>
-                {/* <span onClick={() => props.history.push(`/orderhistory`)}>
-                ORDER HISTORY
-              </span> */}
                 <CartItems
                   remove={(e, bookId) => removeFromCartHandler(e, bookId)}
                   count={(option, bookId, e) =>
                     itemCounterHandler(option, bookId, e)
                   }
                   cart={cartItems}
-                  removing={remove}
                 />
               </Aux>
             </div>

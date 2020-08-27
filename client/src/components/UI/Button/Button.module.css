@@ -8,7 +8,8 @@
 .Close,
 .InCart,
 .Remove,
-.Order {
+.Order,
+.NoStock {
   border-radius: 0.3rem;
   font-size: 11px;
 }
@@ -32,12 +33,14 @@
 .CartBtn:focus,
 .InCart:focus,
 .Close:focus,
-.Order {
+.Order,
+.NoStock {
   outline-style: none;
 }
 
-.Close {
-    margin-left: 10px;
+.Close,
+.NoStock {
+  margin-left: 10px;
   padding: 7px 7px 7px 7px;
   border: 2px solid #b85240;
   background-color: white;
@@ -69,6 +72,12 @@
   font-size: 0.99em;
 }
 
-.Order:disabled {
-    cursor: not-allowed;
+.Order:disabled,
+.NoStock {
+  cursor: not-allowed;
+}
+
+.NoStock {
+  /* margin-bottom: 0px; */
+  /* opacity: 55%; */
 }

@@ -43,8 +43,8 @@ module.exports = {
               allResults.push(object);
             });
           })
-          .catch((err) => {
-            res.err;
+          .catch((error) => {
+            res.status(400).json("Error: " + error);
           })
       );
     }
@@ -98,8 +98,8 @@ module.exports = {
             res.json(uniqueResults);
           });
       })
-      .catch((err) => {
-        res.err;
+      .catch((error) => {
+        res.status(400).json("Error: " + error);
       });
   },
 };

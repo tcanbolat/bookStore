@@ -21,8 +21,16 @@ const CartItems = ({ cart, remove, count, removing }) => {
               </div>
               <div className={classes.ItemDetails}>
                 <h3>{item.volumeInfo.title}</h3>
-                <Button disabled={removing} clicked={(e) => remove(e, item.id)} btnType="Close">
-                  Discard
+                <Button
+                  disabled={item.removing}
+                  clicked={(e) => remove(e, item.id)}
+                  btnType="Close"
+                >
+                  {item.removing ? (
+                    <div>&#8226; &#8226; &#8226; &#8226;</div>
+                  ) : (
+                    "Discard"
+                  )}
                 </Button>
                 <br />
                 <br />
