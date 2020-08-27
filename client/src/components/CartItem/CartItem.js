@@ -5,7 +5,7 @@ import classes from "./cartItems.module.css";
 import Button from "../UI/Button/Button";
 import ItemCounter from "../ItemCounter/ItemCounter";
 
-const CartItems = ({ cart, remove, count, removing }) => {
+const CartItems = ({ cart, remove, count }) => {
   return (
     <div>
       {cart.map((item) => {

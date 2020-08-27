@@ -8,6 +8,8 @@ import MainBody from "../../components/MainBody/MainBody";
 import Button from "../../components/UI/Button/Button";
 import PlaceHolder from "../../components/UI/PlaceHolder/placeHolder";
 import API from "../../utils/API";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import instance from "../../utils/axios-instance";
 
 const Checkout = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
@@ -107,12 +109,11 @@ const Checkout = (props) => {
       shippingInfo: formData,
     })
       .then((res) => {
-        console.log(res);
+        props.history.push("/orderhistory");
       })
       .catch((err) => {
         console.log(err);
       });
-    props.history.push("/orderhistory");
   };
 
   const inputChangedHandler = (event, inputIdentifier) => {
@@ -188,4 +189,4 @@ const Checkout = (props) => {
   );
 };
 
-export default Checkout;
+export default withErrorHandler(Checkout, instance);

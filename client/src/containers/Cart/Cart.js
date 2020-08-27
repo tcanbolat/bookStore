@@ -10,7 +10,9 @@ import MainBody from "../../components/MainBody/MainBody";
 import CartItems from "../../components/CartItem/CartItem";
 import { Link } from "react-router-dom";
 import OrderLink from "../../components/Navigation/OrdersLink/OrderLink";
-// import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import instance from "../../utils/axios-instance";
+
 
 const Cart = (props) => {
   const [cartItems, setCartItems] = useState([]);
@@ -42,7 +44,7 @@ const Cart = (props) => {
   // another effect that uses a setTimeout(); to control the frequency of API calls.
   useEffect(() => {
     // timeout is set to 500 miliseconds.
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       // console.log(countRef);
       // console.log(itemCount);
       // ItemCount is the count state 500 miliseconds ago and the countRef.current is the current count value.
@@ -61,18 +63,22 @@ const Cart = (props) => {
           });
       }
     }, 500);
+    return () => {
+      // clearing the timeOut so that we dont have previous timeouts sitting around in memory.
+      clearTimeout(timer);
+    };
     // this effect triggers whenever itemCOunt and itemID state changes.
   }, [itemCount, itemId]);
 
   const removeFromCartHandler = (e, id) => {
     e.preventDefault();
     // creating a index of the item in hte  cartItems state.
-    const cartIndex = cartItems.findIndex(cartItem => {
+    const cartIndex = cartItems.findIndex((cartItem) => {
       return cartItem.id === id;
     });
     // creating a clone of the indexed item.
     const item = {
-      ...cartItems[cartIndex]
+      ...cartItems[cartIndex],
     };
     // setting the items removing key to true.
     item.removing = true;
@@ -205,4 +211,4 @@ const Cart = (props) => {
   );
 };
 
-export default Cart;
+export default withErrorHandler( Cart, instance);

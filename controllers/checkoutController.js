@@ -51,7 +51,7 @@ module.exports = {
         res.json(response.data);
       })
       .catch((error) => {
-        res.status(400).json("Error: " + error);
+        res.status(error.response.status).json("Error: " + error);
       });
   },
 };

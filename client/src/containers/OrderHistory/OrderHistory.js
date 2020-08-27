@@ -6,6 +6,8 @@ import MainBody from "../../components/MainBody/MainBody";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import ShipmentTracker from "./ShipmentTracker/shipmentTracker";
 import PlaceHolder from "../../components/UI/PlaceHolder/placeHolder";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import instance from "../../utils/axios-instance";
 
 const OrderHistory = (props) => {
   const [loading, setLoading] = useState(true);
@@ -21,6 +23,7 @@ const OrderHistory = (props) => {
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   }, []);
 
@@ -162,4 +165,4 @@ const OrderHistory = (props) => {
   );
 };
 
-export default OrderHistory;
+export default withErrorHandler(OrderHistory, instance);

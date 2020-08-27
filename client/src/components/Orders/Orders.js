@@ -12,9 +12,6 @@ const Orders = (props) => {
 
   const subTotal = priceArray.reduce((a, b) => a + b, 0).toFixed(2);
 
-
-  // const body; 
-
   return (
     <div className={classes.Orders}>
       <h1 className={classes.TotalHeader}>sub total: ${subTotal}</h1>

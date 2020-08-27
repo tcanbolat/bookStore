@@ -44,7 +44,7 @@ module.exports = {
             });
           })
           .catch((error) => {
-            res.status(400).json("Error: " + error);
+            res.status(error.response.status).json("Error: " + error);
           })
       );
     }
@@ -99,7 +99,7 @@ module.exports = {
           });
       })
       .catch((error) => {
-        res.status(400).json("Error: " + error);
+        res.status(error.response.status).json("Error: " + error);
       });
   },
 };

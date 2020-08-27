@@ -13,7 +13,7 @@ module.exports = {
         res.json(fetchedData.reverse());
       })
       .catch((error) => {
-        res.status(400).json("Error: " + error);
+        res.status(error.response.status).json("Error: " + error);
       });
   },
   deleteOrder: (req, res) => {
@@ -58,7 +58,7 @@ module.exports = {
         res.json(response);
       })
       .catch((error) => {
-        res.status(400).json("Error: " + error);
+        res.status(error.response.status).json("Error: " + error);
       });
   },
 };

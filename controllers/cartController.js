@@ -15,7 +15,8 @@ module.exports = {
         res.json(fetchedData);
       })
       .catch((error) => {
-        res.status(400).json('Error: ' + error);
+        console.log(error)
+        res.status(error.response.status).json('Error: ' + error.data);
       });
   },
   delete: (req, res) => {
@@ -27,7 +28,7 @@ module.exports = {
         res.json();
       })
       .catch((error) => {
-        res.status(400).json('Error: ' + error)
+        res.status(error.response.status).json('Error: ' + error)
       });
   },
   addToCart: (req, res) => {
@@ -39,7 +40,7 @@ module.exports = {
         res.json();
       })
       .catch((error) => {
-        res.status(400).json('Error: ' + error)
+        res.status(error.response.status).json('Error: ' + error)
       });
   },
   updateItemCount: (req, res) => {
@@ -54,7 +55,7 @@ module.exports = {
         res.json();
       })
       .catch((error) => {
-        res.status(400).json('Error: ' + error)
+        res.status(error.response.status).json('Error: ' + error)
       });
   },
 };

@@ -11,6 +11,8 @@ import Pagination from "../../components/Pagination/Pagination";
 import Filters from "./Filters/Filters";
 import MainBody from "../../components/MainBody/MainBody";
 import OrderLink from "../../components/Navigation/OrdersLink/OrderLink";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import instance from "../../utils/axios-instance";
 
 const BookSearch = () => {
   // the results from the search API are stored here.
@@ -199,4 +201,4 @@ const BookSearch = () => {
   );
 };
 
-export default BookSearch;
+export default withErrorHandler(BookSearch, instance);
