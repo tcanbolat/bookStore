@@ -81,6 +81,7 @@ const BookSearch = () => {
     setLoading(true); // set loading to make Spinner appear right before making the API call.
     API.searchForBooks(value)
       .then((res) => {
+        console.log(res);
         setSearchResult(res.data); // setting the results to the searchResults state.
         setLoading(false); // on Success, setting loading to false to remove Spinner.
         setCurrentPage(1); // re-setting the pagination back to the first page on every new search.

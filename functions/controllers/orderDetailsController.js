@@ -5,7 +5,8 @@ module.exports = {
     const id = req.query.orderId;
     axios
       .get(
-        `https://bookstore-709eb.firebaseio.com/cart.json?orderBy="orderID"&equalTo="` +
+        JSON.parse(process.env.FIREBASE_CONFIG).databaseURL +
+          `/cart.json?orderBy="orderID"&equalTo="` +
           id +
           `"`
       )

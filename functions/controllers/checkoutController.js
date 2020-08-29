@@ -38,8 +38,8 @@ module.exports = {
     // grouping them all in an object will update values at multiple paths with one axios call.
     axios
       .all([
-        axios.patch("https://bookstore-709eb.firebaseio.com/cart.json", batch),
-        axios.post("https://bookstore-709eb.firebaseio.com/orders.json", {
+        axios.patch(JSON.parse(process.env.FIREBASE_CONFIG).databaseURL + "/cart.json", batch),
+        axios.post(JSON.parse(process.env.FIREBASE_CONFIG).databaseURL + "/orders.json", {
           shipping: shippingInfo,
           total: orderTotal,
           orderId: email + "-" + time,

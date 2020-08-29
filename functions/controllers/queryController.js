@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 module.exports = {
-  findAll: (req, res) => {
+  searchForBooks: (req, res) => {
     const request = req.query.q;
     // The startIndex is to help define what index to start from each loop.
     const startIndex = ["1", "41", "81", "121"];
@@ -22,7 +22,8 @@ module.exports = {
               // the most you can set maxResults to in the URL, is 40.
               "&maxResults=40&startIndex=" +
               // each loop, the StartIndex goes up by 40.
-              startIndex[i]
+              startIndex[i] +
+              "&country=US"
           )
           .then((resultSet) => {
             // filtering out any results that dont contian the following values.
@@ -70,14 +71,16 @@ module.exports = {
 
         // checking the uniqueResults array to see if any of the search reuslts are saved in the cart database.
         axios
-          .get("https://bookstore-709eb.firebaseio.com/cart.json")
+          .get(
+            JSON.parse(process.env.FIREBASE_CONFIG).databaseURL + "/cart.json"
+          )
           .then((response) => {
             const cartArray = [];
             // pushing the response from the database into cartArray.
             for (let key in response.data) {
               cartArray.push({ ...response.data[key] });
             }
-            // for however many object are in the caryArray...  
+            // for however many object are in the caryArray...
             for (let i = 0; i < cartArray.length; i++) {
               // check it with uniqueResults and return any that match, by the same id.
               const bookIndex = uniqueResults.findIndex((b) => {

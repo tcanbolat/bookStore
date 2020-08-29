@@ -4,7 +4,8 @@ module.exports = {
   getAll: (req, res) => {
     axios
       .get(
-        'https://bookstore-709eb.firebaseio.com/cart.json?orderBy="inCart"&equalTo=true'
+        JSON.parse(process.env.FIREBASE_CONFIG).databaseURL +
+          '/cart.json?orderBy="inCart"&equalTo=true'
       )
       .then((response) => {
         const fetchedData = [];
@@ -15,37 +16,44 @@ module.exports = {
         res.json(fetchedData);
       })
       .catch((error) => {
-        res.status(error.response.status).json('Error: ' + error.data);
+        res.status(error.response.status).json("Error: " + error.data);
       });
   },
   delete: (req, res) => {
     axios
       .delete(
-        "https://bookstore-709eb.firebaseio.com/cart/" + req.params.id + ".json"
+        JSON.parse(process.env.FIREBASE_CONFIG).databaseURL +
+          "/cart/" +
+          req.params.id +
+          ".json"
       )
       .then(() => {
         res.json();
       })
       .catch((error) => {
-        res.status(error.response.status).json('Error: ' + error)
+        res.status(error.response.status).json("Error: " + error);
       });
   },
   addToCart: (req, res) => {
     req.body["count"] = 1;
     req.body["inCart"] = true;
     axios
-      .post("https://bookstore-709eb.firebaseio.com/cart.json", req.body)
+      .post(
+        JSON.parse(process.env.FIREBASE_CONFIG).databaseURL + "/cart.json",
+        req.body
+      )
       .then(() => {
         res.json();
       })
       .catch((error) => {
-        res.status(error.response.status).json('Error: ' + error)
+        res.status(error.response.status).json("Error: " + error);
       });
   },
   updateItemCount: (req, res) => {
     axios
       .put(
-        "https://bookstore-709eb.firebaseio.com/cart/" +
+        JSON.parse(process.env.FIREBASE_CONFIG).databaseURL +
+          "/cart/" +
           req.body.id +
           "/count.json",
         JSON.stringify(req.body.count)
@@ -54,7 +62,7 @@ module.exports = {
         res.json();
       })
       .catch((error) => {
-        res.status(error.response.status).json('Error: ' + error)
+        res.status(error.response.status).json("Error: " + error);
       });
   },
 };

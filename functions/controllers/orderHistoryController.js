@@ -3,7 +3,7 @@ const axios = require("axios");
 module.exports = {
   getOrderHistory: (req, res) => {
     axios
-      .get("https://bookstore-709eb.firebaseio.com/orders.json")
+      .get(JSON.parse(process.env.FIREBASE_CONFIG).databaseURL + "/orders.json")
       .then((response) => {
         const fetchedData = [];
         for (let key in response.data) {
@@ -20,17 +20,18 @@ module.exports = {
     axios
       .all([
         axios.get(
-          `https://bookstore-709eb.firebaseio.com/cart.json?orderBy="orderID"&equalTo="` +
+          JSON.parse(process.env.FIREBASE_CONFIG).databaseURL +
+            `/cart.json?orderBy="orderID"&equalTo="` +
             req.params.id +
             `"`
         ),
         axios.get(
-          `https://bookstore-709eb.firebaseio.com/orders.json?orderBy="orderId"&equalTo="` +
+          JSON.parse(process.env.FIREBASE_CONFIG).databaseURL +
+            `/orders.json?orderBy="orderId"&equalTo="` +
             req.params.id +
             `"`
         ),
       ])
-
       .then((responses) => {
         const orderItems = Object.keys(responses[0].data);
         const orderKey = Object.keys(responses[1].data);
@@ -38,7 +39,8 @@ module.exports = {
         for (let i = 0; i < orderItems.length; i++) {
           deleteArray.push(
             axios.delete(
-              "https://bookstore-709eb.firebaseio.com/cart/" +
+              JSON.parse(process.env.FIREBASE_CONFIG).databaseURL +
+                "/cart/" +
                 orderItems[i] +
                 ".json"
             )
@@ -48,7 +50,8 @@ module.exports = {
         axios.all([
           deleteArray,
           axios.delete(
-            "https://bookstore-709eb.firebaseio.com/orders/" +
+            JSON.parse(process.env.FIREBASE_CONFIG).databaseURL +
+              "/orders/" +
               orderKey +
               ".json"
           ),

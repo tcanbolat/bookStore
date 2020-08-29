@@ -174,6 +174,8 @@ const Cart = (props) => {
     </PlaceHolder>
   );
 
+  console.log(cartItems);
+
   return (
     <Aux>
       <OrderLink />

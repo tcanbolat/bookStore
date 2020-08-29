@@ -2,7 +2,7 @@ import axios from "./axios-instance";
 
 export default {
   searchForBooks: (q) => {
-    return axios.get("/api/google", { params: { q: "title:" + q } });
+    return axios.get("/api/bookquery", { params: { q: "title:" + q } });
   },
   getCart: () => {
     return axios.get("/api/cart");
