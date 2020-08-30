@@ -37,19 +37,30 @@ module.exports = {
     // the "uniqueId/inCart : /ordered" becomes the url for each uniqueId and updates them all to true or false.
     // grouping them all in an object will update values at multiple paths with one axios call.
     axios
+      // .all call that takes in multiple axios calls and waits for them to all finish.
       .all([
-        axios.patch(JSON.parse(process.env.FIREBASE_CONFIG).databaseURL + "/cart.json", batch),
-        axios.post(JSON.parse(process.env.FIREBASE_CONFIG).databaseURL + "/orders.json", {
-          shipping: shippingInfo,
-          total: orderTotal,
-          orderId: email + "-" + time,
-          orderTime: time
-        }),
+        // making a call for each item that was checked out to the REST API database and updating their values.
+        axios.patch(
+          JSON.parse(process.env.FIREBASE_CONFIG).databaseURL + "/cart.json",
+          batch
+        ),
+        // making a call to the orders node of the REST API database and saving the order info.
+        axios.post(
+          JSON.parse(process.env.FIREBASE_CONFIG).databaseURL + "/orders.json",
+          {
+            shipping: shippingInfo,
+            total: orderTotal,
+            orderId: email + "-" + time,
+            orderTime: time,
+          }
+        ),
       ])
       .then((response) => {
+        // on success, sending back a 200 response.
         res.json(response.data);
       })
       .catch((error) => {
+        // if error send the error status and the data.
         res.status(error.response.status).json("Error: " + error);
       });
   },

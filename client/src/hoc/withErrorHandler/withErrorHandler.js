@@ -5,41 +5,56 @@ import classes from "./withErrorHandler.module.css";
 import Modal from "../../components/UI/Modal/modal";
 import Aux from "../Auxillary/Auxillary";
 
-const withErrorHandler = (WrappedComponent, axios) => {
+// this hoc intercepts all axios request ands responses made from the front end of the app.
+// this is wrapped around all containers that have axios calls being used.
+// example: export default withErrorHandler(ContainerName, instance);
+// instance is coming from the axios-instance.js file in the utils folder.
+
+const withErrorHandler = (WrappedComponent, instance) => {
   return (props) => {
+    // setting up an error state.
     const [error, setError] = useState(null);
 
-    const reqInterceptor = axios.interceptors.request.use((req) => {
+    // setting up the interceptor for any requsts.
+    const reqInterceptor = instance.interceptors.request.use((req) => {
       setError(null);
+      // and sending it through with out doing anything.
       return req;
     });
-    const resInterceptor = axios.interceptors.response.use(
+    // setting up the interceptor for any responses.
+    const resInterceptor = instance.interceptors.response.use(
       (res) => {
+        // if no error, send the response through.
         return res;
       },
       (err) => {
+        // if error set the error state to the error message.
         setError(err.message);
+        // and send it as an error.
         return Promise.reject(err);
       }
     );
 
+    // this is an effect that will close all requests and responses, preventing memory leaks.
     useEffect(() => {
       return () => {
-        axios.interceptors.request.eject(reqInterceptor);
-        axios.interceptors.response.eject(resInterceptor);
+        instance.interceptors.request.eject(reqInterceptor);
+        instance.interceptors.response.eject(resInterceptor);
       };
     }, [reqInterceptor, resInterceptor]);
 
+    // handler used to set the error to null after clicking out of the error.
     const errorConfirmedHandler = () => {
       setError(null);
     };
 
+    // show a modal with the error message if the error has happend.
     return (
       <Aux>
         <Modal show={error} clicked={errorConfirmedHandler}>
           <div className={classes.ErrorBody}>
             <h3>Error!</h3>
-            <img alt="book logo" style={{width: "25%"}} src={BookLogo} />
+            <img alt="book logo" style={{ width: "25%" }} src={BookLogo} />
             <div>
               <strong>error message: </strong> {error ? error : null}
             </div>

@@ -1,3 +1,6 @@
+//custom form validation helper.
+// it checks based on the rules each input has and returns valid if all the checks are good.
+
 const checkValidity = (value, rules) => {
   let isValid = true;
   if (!rules) {

@@ -1,5 +1,7 @@
+// import is coming from the axios-instance and not the axios node module.
 import axios from "./axios-instance";
 
+// all the axios calls used in the app that get sent to the bookstore serveless function to get executed.
 export default {
   searchForBooks: (q) => {
     return axios.get("/api/bookquery", { params: { q: "title:" + q } });

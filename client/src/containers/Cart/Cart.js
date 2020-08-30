@@ -54,6 +54,7 @@ const Cart = (props) => {
           count: itemCount,
         })
           .then((res) => {
+            console.log("ITEM_COUNT_UPDATED");
           })
           .catch((err) => {
           });
@@ -173,8 +174,6 @@ const Cart = (props) => {
       <Link to="orderhistory">Go to order history</Link>
     </PlaceHolder>
   );
-
-  console.log(cartItems);
 
   return (
     <Aux>

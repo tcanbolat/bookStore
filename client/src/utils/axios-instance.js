@@ -10,6 +10,8 @@ if (cancel !== undefined) {
   });
 }
 
+// this instance is used for each axios call in the API.js file located in the same root as this file.
+// I use this in conjuction with the errorHandler.js file located in the hoc folder.
 const instance = axios.create({
   cancelToken: new CancelToken(function executor(c) {
     cancel = c;

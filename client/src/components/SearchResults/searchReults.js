@@ -9,7 +9,6 @@ const SearchResults = (props) => {
   const books = props.bookResults;
   let bookCard = <PlaceHolder message={"Search for a book!"} />;
 
-  console.log(books)
   if (books === 0) {
     bookCard = <PlaceHolder message={"No results, please try again"} />;
   } else if (books.length > 0) {

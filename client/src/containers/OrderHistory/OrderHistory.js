@@ -15,59 +15,82 @@ const OrderHistory = (props) => {
   const [deleting, setDeleting] = useState(false);
   const [orderDetails, setOrderDetails] = useState([]);
 
+  // effect that will get all orders from the REST API databse.
   useEffect(() => {
     API.getOrders()
       .then((res) => {
+        // setting the orders state to the response from the database.
         setOrders(res.data);
+        // set loading to false to stop spinner.
         setLoading(false);
       })
       .catch((err) => {
+        // this component is wrapped around an errorHandler hoc that handles the errors.
+        // set loading to false to stop spinner.
         setLoading(false);
       });
   }, []);
 
   const removeOrderHandler = (id) => {
+    // set deleting to true to disable the button.
     setDeleting(true);
     API.deleteOrder(id)
       .then((res) => {
+        // on suceess filter out the order that mathced with the orderId.
         const deleteOrder = orders.filter((order) => order.orderId !== id);
+        // set the state to the filtered array.
         setOrders(deleteOrder);
         setDeleting(false);
       })
       .catch((err) => {
+        setDeleting(false);
       });
   };
 
   const orderDetailsHandler = (orderId) => {
+    // finding the order that was clicked return it from the orders state.
     const orderIndex = orders.findIndex((order) => {
       return order.orderId === orderId;
     });
+    // defining the order
     const order = {
       ...orders[orderIndex],
     };
+    // setting the clicked order to loading is true.
     order.loading = true;
+    // making a copy of the state and updating it with the clicked object set to loading.
     const setloading = [...orders];
     setloading[orderIndex] = order;
     setOrders(setloading);
 
+    // this basically toggles back to show the shipment tracker.
+    // if the clicked object has show details set to true...
     if (order.showDetails) {
+      // then set it to false as well as loading to false
       order.showDetails = false;
       order.loading = false;
+      // updating the state.
       const toggleTracker = [...orders];
       toggleTracker[orderIndex] = order;
       setOrders(toggleTracker);
     } else {
       API.getByOrderId(orderId)
         .then((res) => {
+          // on success, set all orders showdetals keys to false.
+          // this is so that if a previous item is already showing order details; that will switch back to the tracker.
+          // this can be removed if you want to show more than one order details at a time and manually toggle between each order.
           orders.map((a) => (a.showDetails = false));
+          // set the showDeteails to the clicked items to true and loading to false.
           order["showDetails"] = true;
           order.loading = false;
+          // copying and updating the orders state.
           const toggleDetail = [...orders];
           toggleDetail[orderIndex] = order;
           setOrders(toggleDetail);
           setOrderDetails(res.data);
         })
         .catch((err) => {
+          // this container is wrapped around an errorHandler that handles all errors.
         });
     }
   };
@@ -76,11 +99,12 @@ const OrderHistory = (props) => {
     return (
       <div className={classes.OrderItems}>
         <div className={classes.ItemTitle}>{orderItem.volumeInfo.title}</div>
-        <div className={classes.ItemPrice}>${orderItem.saleInfo.listPrice.amount} <em>X</em> {orderItem.count}</div> 
+        <div className={classes.ItemPrice}>
+          ${orderItem.saleInfo.listPrice.amount} <em>X</em> {orderItem.count}
+        </div>
       </div>
     );
   });
-
 
   const orderList = orders.map((order) => {
     return (
@@ -133,7 +157,6 @@ const OrderHistory = (props) => {
       </div>
     );
   });
-
 
   return (
     <MainBody>
