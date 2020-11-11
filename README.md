@@ -86,16 +86,6 @@
 ## 
 ##
 
-<h3 align="center">Developer comments</h3>
-<p>This is an upgrade to an earlier version of this app that only made queries and saved books. I wanted to challenge myself by taking it one step further and adding a shopping cart feature as well as being able to order your items and track the shipment.<br />
-I also used as little dependencies as possible to push myself to figure everything out on my own; such as styling, all done by me using css, no bootstrap or any other css framework. Instead of using a rater module, I also created my own Rater component to display stars based on the book rating. <br />
-The most challenging was configuring the pagination with the filter component. pagination on its own wasn't too hard to figure out, but when adding filters and changing the list, I would lose part of the list, or lose the state when adding an item to the cart wouldn't be recognized when changing to a different filter. I was able to get around this by creating a state for all results as well as a filtered state, also making sure to adjust any "if'' checks to listen to the correct state. <br />
-I'm also really proud of being able to create an errorhandler that I am able to wrap around my containers to handle any errors. This was built using an axios instance with the errorhandler and then axios interceptors to intercept any requests and responses; sending it through on success and throwing an error modal to the screen whenever an error is caught. This can still be improved by adding authentication or using redux and redux-saga to create a global state for more leaner code.</p>
-<br />
-<p>Thanks for checking out my web app. <br />
-Feel free to follow me on github or reach out to me via linkedin.
-</p>
-<p><a href="https://www.linkedin.com/in/abdullah-canbolat-6ab794109/">https://www.linkedin.com/in/abdullah-canbolat-6ab794109/</a></p>
 
 
 
